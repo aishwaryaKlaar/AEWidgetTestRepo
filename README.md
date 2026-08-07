@@ -23,7 +23,7 @@ The widget is built with **Vite + React** and compiles into a single self-contai
 
 ## Project Structure
 
-
+```text
 widget/
 ├── src/
 │   ├── modules/
@@ -58,7 +58,7 @@ widget/
 │   └── copy-api.js
 │
 └── vite.config.js
-
+```
 
 ---
 
@@ -66,9 +66,9 @@ widget/
 
 Install project dependencies.
 
-
+```bash
 npm install
-
+```
 
 ---
 
@@ -76,15 +76,15 @@ npm install
 
 Start the Vite development server.
 
-
+```bash
 npm run dev
-
+```
 
 The widget will be served at:
 
-
+```
 http://localhost:5173
-
+```
 
 Although it can be opened directly, it is intended to be loaded into a logged-in Klaar page.
 
@@ -94,17 +94,17 @@ Although it can be opened directly, it is intended to be loaded into a logged-in
 
 Generate the production bundle.
 
-
+```bash
 npm run build
-
+```
 
 Build output:
 
-
+```
 dist/
 ├── loader.js
 └── api/
-
+```
 
 - `loader.js` is a self-contained IIFE bundle.
 - CSS is automatically injected using `vite-plugin-css-injected-by-js`.
@@ -116,9 +116,9 @@ dist/
 
 Deploy the widget to Vercel.
 
-
+```bash
 npx vercel --prod
-
+```
 
 ### Required Environment Variables
 
@@ -139,28 +139,28 @@ npx vercel --prod
 
 Open any logged-in Klaar page and execute the following in the browser console.
 
-
+```javascript
 const s = document.createElement("script");
 s.src = "https://<deployment>.vercel.app/loader.js";
 document.head.appendChild(s);
-
+```
 
 The script exposes:
 
-
+```javascript
 window.KlaarAEWidget.mount()
 window.KlaarAEWidget.unmount()
-
+```
 
 Create a container and mount the widget.
 
-
+```javascript
 const container = document.createElement("div");
 
 document.body.appendChild(container);
 
 window.KlaarAEWidget.mount(container);
-
+```
 
 > **Note:** Never mount directly into `document.body`, as React will take ownership of the entire element.
 
@@ -205,9 +205,9 @@ The API endpoint is selected automatically.
 
 All API requests go through:
 
-
+```text
 src/core/api.js
-
+```
 
 The wrapper automatically handles:
 
@@ -227,11 +227,11 @@ Some backend APIs return encrypted payloads.
 
 Example:
 
-
+```json
 {
   "data": "<ciphertext>"
 }
-
+```
 
 The API wrapper automatically decrypts the payload before returning it to the caller.
 
@@ -243,9 +243,9 @@ Multiple AES key/IV combinations are supported to maintain compatibility across 
 
 Data shared between steps is stored in:
 
-
+```text
 src/core/state.js
-
+```
 
 Examples include:
 
@@ -262,10 +262,11 @@ This avoids unnecessary API requests between dependent steps.
 
 The widget exposes the following global methods.
 
-
+```javascript
 window.KlaarAEWidget.mount(container);
 
 window.KlaarAEWidget.unmount();
+```
 
 The widget never mounts automatically, allowing the host application full control over its lifecycle.
 
@@ -283,15 +284,15 @@ For cases where browsers hide error bodies due to CORS restrictions, requests ca
 
 1. Create or reuse a module inside:
 
-
+```
 src/modules/
-
+```
 
 2. Add an async function inside `actions.js`.
 
 Example:
 
-
+```javascript
 import api from "../../core/api";
 
 export async function createSomething() {
@@ -302,7 +303,7 @@ export async function createSomething() {
     message: "Created successfully",
   };
 }
-
+```
 
 3. Add a corresponding `<StepButton />` in the module's `index.jsx`.
 
