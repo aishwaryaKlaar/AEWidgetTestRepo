@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './styles/widget.css'
+import { API_BASE } from './core/api.js'
 
 // Cloudflare Worker URL — update this after running: wrangler deploy
 const DOMAIN_CHECK_URL = 'https://klaar-domain-check.REPLACE_WITH_YOUR_ACCOUNT.workers.dev'
@@ -23,7 +24,7 @@ async function isDomainAllowed() {
 function logAuthDiagnostics() {
   const _wid = localStorage.getItem('workspace-id')
   const _tok = localStorage.getItem('X-AUTH-TOKEN')
-  const _apiHost = ({ 'app.klaarhq.com': 'api.klaarhq.com', 'us.klaarhq.com': 'api-usprod.klaarhq.com' })[location.host] || 'api-usprod.klaarhq.com'
+  const _apiHost = API_BASE.replace(/^https?:\/\//, '')
   console.log(`[Klaar AE Widget] host=${location.host} | api=${_apiHost} | workspace=${_wid || '❌ MISSING'} | token=${_tok ? '✓' : '❌ MISSING'}`)
   if (!_wid || !_tok) console.error('[Klaar AE Widget] Missing auth — widget buttons will fail. Are you logged in to Klaar?')
 }

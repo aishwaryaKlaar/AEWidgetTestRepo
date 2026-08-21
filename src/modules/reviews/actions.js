@@ -101,17 +101,17 @@ function _currentQuarterName() {
 }
 
 const RATING_SCALE_NAMES = [
-  '5-Point Core Competency Benchmark',
-  '5-Level Enterprise Value Matrix',
-  '5-Point Mastery & Contribution Index',
-  '5-Level High-Performance Assessment Scale',
-  '5-Point Capability & Impact Spectrum',
-  '5-Level Strategic Execution Benchmark',
-  '5-Point Workforce Capability Matrix',
-  '5-Level Merit & Growth Continuum',
-  '5-Point Operational Quality Index',
-  '5-Level Organizational Maturity Scale',
-  '5-Point Goal Delivery Framework',
+  '5-Point Executive Execution & Value Index',
+  '5-Level Technical Proficiency & Mastery Scale',
+  '5-Point Operational Excellence Spectrum',
+  '5-Level Talent Capability & Impact Matrix',
+  '5-Point Strategic Alignment Benchmark',
+  '5-Level Enterprise Output & Merit Continuum',
+  '5-Point High-Performance Contribution Index',
+  '5-Level Organizational Leadership Spectrum',
+  '5-Point Business Results & Delivery Framework',
+  '5-Level Domain Mastery & Growth Scale',
+  '5-Point Enterprise Competency Rating Spectrum',
 ];
 
 const RATING_OPTIONS = [
@@ -230,13 +230,13 @@ export async function createReviews() {
 
   const REVIEWS = [
 
-  { fromTemplate: 'yearEnd', reviewName: `Annual Strategic Alignment & Performance Review ${y}`, endDate: `${y}-12-30T23:59:59.000Z` },
-  { fromTemplate: 'midYear', reviewName: `Mid-Year Business Impact & Growth Assessment ${y}`, endDate: `${y}-12-30T23:59:59.000Z` },
+  { fromTemplate: 'yearEnd', reviewName: `Annual Strategic Horizon & Leadership Assessment ${y}`, endDate: `${y}-12-30T23:59:59.000Z` },
+  { fromTemplate: 'midYear', reviewName: `Mid-Year Capabilities & Delivery Milestone Review ${y}`, endDate: `${y}-12-30T23:59:59.000Z` },
 
-  { fromTemplate: 'quarterly', reviewName: `Q1 Business Operations & Goal Check-In ${y}` },
-  { fromTemplate: 'quarterly', reviewName: `Q2 Performance Milestone & Mid-Course Sync ${y}` },
-  { fromTemplate: 'quarterly', reviewName: `Q3 Strategic Deliverables & Alignment Review ${y}` },
-  { fromTemplate: 'quarterly', reviewName: `Q4 Annual Target Readiness & Wrap-Up ${y}` },
+  { fromTemplate: 'quarterly', reviewName: `Q1 Objective Alignment & Foundation Kickoff ${y}` },
+  { fromTemplate: 'quarterly', reviewName: `Q2 Mid-Flight Velocity & Friction Diagnostic ${y}` },
+  { fromTemplate: 'quarterly', reviewName: `Q3 Value Delivery & Cross-Team Synergy Check ${y}` },
+  { fromTemplate: 'quarterly', reviewName: `Q4 Annual Impact Synthesis & Wrap-up ${y}` },
 
 ];
 
@@ -260,16 +260,16 @@ export async function createReviews() {
 }
 
 const REPORT_NAMES = [
-  'Global Business Performance Benchmark',
-  'Strategic Value Creation Analytics',
-  'Organizational Productivity Digest',
-  'Leadership & Managerial Audit',
-  'Workforce Capacity & Talent Audit',
-  'Operational Delivery & Efficiency Ledger',
-  'Enterprise Capability Assessment',
-  'Quarterly Execution & Deliverables Brief',
-  'Human Capital Development Monitor',
-  'Corporate Governance & Quality Intelligence',
+  'Developer Velocity & Engineering Friction Ledger',
+  'Total Rewards & Equity Mobility Index',
+  'Product-Led Growth & Retention Telemetry',
+  'Incident Post-Mortem & Resilience Diagnostic',
+  'Psychological Safety & Belonging Scorecard',
+  'SaaS Spend Discipline & Vendor ROI Analytics',
+  'Async Collaboration & Knowledge Hygiene Audit',
+  'Security Posture & Compliance Integrity Brief',
+  'Zero-Trust Architecture Maturity Report',
+  'Cross-Functional Matrix Synergy Assessment',
 ];
 
 async function _createOneReport({ name, calibrationId }) {

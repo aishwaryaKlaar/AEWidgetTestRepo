@@ -7,9 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "postbuild": "node scripts/copy-api.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test"
   },
   "dependencies": {
+    "@vercel/functions": "^3.9.1",
     "crypto-js": "^4.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

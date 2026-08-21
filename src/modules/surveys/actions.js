@@ -84,92 +84,92 @@ function _tpl(name, desc, questions) {
 
 function _buildTemplates() {
   return [
-    _tpl('Customer Centricity & External Value Delivery Audit',
-      'Gauges client empathy, product quality standards, feedback integration, and alignment of internal metrics with customer outcomes.',
+    _tpl('Developer Experience, Tooling & Engineering Velocity Audit',
+      'Assesses local development environments, build and CI/CD efficiency, toolchain friction, and deployment autonomy.',
       [
-        _openEnded('Describe a specific situation where your team went above and beyond to solve a critical customer or client pain point.'),
-        _openEnded('What internal process or policy most frequently hinders your ability to deliver a seamless customer experience?'),
-        _likert('Our team prioritizes decisions that create long-term value and satisfaction for our customers.'),
-        _likert('Feedback from customers is consistently analyzed and incorporated into product or service improvements.'),
+        _openEnded('Describe a recent tooling enhancement or automation that noticeably reduced your daily development friction.'),
+        _openEnded('Which legacy system, slow pipeline, or approval bottleneck most severely limits your team\'s engineering velocity?'),
+        _likert('Our team has modern, reliable development tools and infrastructure to ship high-quality code rapidly.'),
+        _likert('Automated testing and CI/CD pipelines provide fast, dependable feedback without excessive manual gates.'),
         _values(),
-        _excellence('Commit to excellence: Anchor every workflow in user empathy and unyielding commitment to end-value delivery.'),
+        _excellence('Commit to excellence: Streamline engineering workflows, eliminate toil, and maximize developer velocity.'),
       ]),
 
-    _tpl('Inclusion, Psychological Safety & Belonging Index',
-      'Assesses openness to diverse perspectives, freedom to report mistakes, equitable growth opportunities, and inclusive leadership practices.',
+    _tpl('Total Rewards, Compensation Clarity & Career Mobility Sentiment Pulse',
+      'Measures transparency around compensation bands, merit recognition fairness, promotional pathways, and benefit satisfaction.',
       [
-        _openEnded('Describe an instance where your team created an environment where everyone felt safe sharing dissenting ideas or owning mistakes.'),
-        _openEnded('What specific action or cultural shift would most improve psychological safety and inclusion within your department?'),
-        _likert('I feel safe taking calculated risks and expressing unconventional ideas without fear of negative repercussions.'),
-        _likert('Diverse backgrounds and viewpoints are actively sought out and valued in team decision-making.'),
+        _openEnded('Share an example where compensation, promotion, or merit criteria were communicated with exceptional clarity.'),
+        _openEnded('What specific area of career progression or reward transparency requires clearer guidelines from people leadership?'),
+        _likert('The criteria for career progression, leveling benchmarks, and promotional milestones are transparent and fair.'),
+        _likert('Our total rewards and recognition programs accurately reflect individual contributions and market standards.'),
         _values(),
-        _excellence('Commit to excellence: Cultivate high-trust environments where every voice is heard and leveraged for better outcomes.'),
+        _excellence('Commit to excellence: Champion equitable recognition, transparent mobility benchmarks, and rewarding growth.'),
       ]),
 
-    _tpl('Continuous Learning & Professional Growth Diagnostic',
-      'Measures upskilling opportunities, internal knowledge sharing, career progression pathways, and educational resource accessibility.',
+    _tpl('Customer Empathy, Product-Led Growth & Value Realization Diagnostic',
+      'Evaluates user feedback loops, customer obsession across non-product functions, product telemetry usage, and time-to-value metrics.',
       [
-        _openEnded('Describe a recent opportunity provided by the organization that significantly expanded your skills or domain knowledge.'),
-        _openEnded('What skill or capability gap currently exists in your team that requires better learning and development support?'),
-        _likert('I am provided with adequate learning opportunities and tools to advance my professional capabilities.'),
-        _likert('My career goals are supported through regular, actionable discussions with my leadership.'),
+        _openEnded('Describe an instance where direct customer feedback or telemetry led to a pivot in project priorities.'),
+        _openEnded('Where is our organization currently most disconnected from the day-to-day pain points of our end users?'),
+        _likert('Our team consistently validates assumptions against direct user research, customer interviews, and behavioral telemetry.'),
+        _likert('Delivering measurable value and solving core customer pain points takes precedence over vanity delivery metrics.'),
         _values(),
-        _excellence('Commit to excellence: Pursue continuous mastery, embrace new skillsets, and share knowledge across the organization.'),
+        _excellence('Commit to excellence: Anchor every initiative in authentic customer empathy and measurable end-user value.'),
       ]),
 
-    _tpl('Systems Scalability & Process Automation Survey',
-      'Evaluates operational technical debt, repetitive manual friction, workflow automation maturity, and architectural scale preparedness.',
+    _tpl('Operational Resilience, Incident Response & Crisis Preparedness Barometer',
+      'Assesses disaster recovery readiness, blameless post-mortem culture, incident communication protocols, and operational hardening.',
       [
-        _openEnded('Provide an example of a process that was successfully automated or simplified to enhance operational efficiency.'),
-        _openEnded('Which manual or repetitive administrative workflow currently consumes the most unnecessary team bandwith?'),
-        _likert('Our core operational processes are designed to handle business growth without breaking or causing delivery delays.'),
-        _likert('Leadership actively invests in automating repetitive tasks to free up team capacity for strategic work.'),
+        _openEnded('Describe a recent outage or high-pressure operational incident that was resolved effectively through team coordination.'),
+        _openEnded('What systemic single point of failure or operational gap poses the biggest risk to our service continuity?'),
+        _likert('Our organization conducts blameless, thorough root-cause post-mortems to systematically prevent incident recurrence.'),
+        _likert('Clear playbooks, escalation paths, and monitoring guardrails exist for managing critical operational emergencies.'),
         _values(),
-        _excellence('Commit to excellence: Build for long-term scalability, eliminate repetitive toil, and optimize systems continually.'),
+        _excellence('Commit to excellence: Fortify platform resilience, embrace blameless learning, and lead calmly through operational crises.'),
       ]),
 
-    _tpl('Governance, Risk Management & Integrity Benchmark',
-      'Examines compliance adherence, ethical decision-making standards, risk proactive identification, and data security consciousness.',
+    _tpl('Inclusive Culture, Psychological Safety & Team Belonging Diagnostic',
+      'Measures openness to unconventional ideas, speaking up without fear of retaliation, equitable growth opportunities, and inclusive leadership.',
       [
-        _openEnded('Describe how your team recently balanced rapid delivery speed with strict security or regulatory compliance standards.'),
-        _openEnded('Where do you see potential operational or compliance risks that the organization should address more proactively?'),
-        _likert('Our organization maintains high ethical standards and zero tolerance for compromised integrity.'),
-        _likert('Employees are empowered and encouraged to report compliance risks and operational vulnerabilities immediately.'),
+        _openEnded('Describe a scenario where a team member felt empowered to challenge an established decision or raise a contrarian viewpoint.'),
+        _openEnded('What structural dynamic or cultural habit currently discourages team members from speaking up candidly?'),
+        _likert('Team members feel safe taking calculated risks, voicing dissenting perspectives, and learning openly from failures.'),
+        _likert('Diverse voices and varied perspectives are actively solicited and respected during critical planning sessions.'),
         _values(),
-        _excellence('Commit to excellence: Uphold uncompromising integrity, manage risk proactively, and deliver with institutional rigor.'),
+        _excellence('Commit to excellence: Foster high-trust psychological safety, empower diverse viewpoints, and champion inclusive growth.'),
       ]),
 
-    _tpl('Performance Recognition & Total Rewards Feedback Pulse',
-      'Captures perception of meritocracy, compensation transparency, performance assessment fairness, and holistic peer recognition.',
+    _tpl('Vendor Governance, Sourcing Efficiency & SaaS Spend Discipline Benchmark',
+      'Evaluates third-party software utilization, supplier risk management, procurement agility, and commercial contract oversight.',
       [
-        _openEnded('Describe a time when an exceptional contribution by you or a peer was recognized in a meaningful way.'),
-        _openEnded('What change in the performance evaluation or recognition framework would make it feel more fair and transparent?'),
-        _likert('High performance and extra-mile efforts are recognized and rewarded fairly across the organization.'),
-        _likert('The criteria used to evaluate performance and determine career advancements are transparent and clear.'),
+        _openEnded('Provide an example of an external vendor integration or contract negotiation that delivered high ROI for your group.'),
+        _openEnded('Which third-party software tool or external agency partnership is currently underutilized or creating unnecessary overhead?'),
+        _likert('Our procurement and vendor onboarding processes are streamlined, transparent, and security-compliant.'),
+        _likert('Our department actively monitors SaaS tool utilization and eliminates redundant software licenses.'),
         _values(),
-        _excellence('Commit to excellence: Foster a true meritocracy where impact is celebrated and standards remain high.'),
+        _excellence('Commit to excellence: Optimize external partnerships, enforce prudent SaaS spend, and maintain vendor rigor.'),
       ]),
 
-    _tpl('Organizational Clarity & Resource Allocation Barometer',
-      'Measures priority alignment, budget/bandwidth distribution, project scoping efficiency, and focus on strategic core bets.',
+    _tpl('Asynchronous Work, Meeting Hygiene & Knowledge Management Index',
+      'Gauges documentation quality, meeting overload reduction, asynchronous decision-making maturity, and centralized knowledge discovery.',
       [
-        _openEnded('Describe a time when leadership made a difficult prioritization decision that helped your team focus on what truly mattered.'),
-        _openEnded('What conflicting priorities or resource constraints currently prevent your team from executing at full potential?'),
-        _likert('Resources, budget, and headcount are allocated effectively to support key strategic initiatives.'),
-        _likert('Our team has a clear understanding of which projects take priority when trade-offs are necessary.'),
+        _openEnded('Describe an initiative where effective documentation or asynchronous communication replaced the need for recurring meetings.'),
+        _openEnded('What recurring meeting or fragmented communication channel generates the greatest drain on your deep-focus time?'),
+        _likert('Our team relies on well-structured documentation and async collaboration before scheduling synchronous meetings.'),
+        _likert('Internal documentation, architectural decisions, and project knowledge are easy to locate, accurate, and up to date.'),
         _values(),
-        _excellence('Commit to excellence: Focus resources on high-impact objectives and execute with clear strategic intentionality.'),
+        _excellence('Commit to excellence: Cultivate intentional meeting hygiene, protect deep focus, and champion rigorous async documentation.'),
       ]),
 
-    _tpl('Vendor, Ecosystem & Partner Synergy Review',
-      'Gauges external vendor management efficiency, third-party integration quality, contract execution speed, and partner ecosystem alignment.',
+    _tpl('Security Hygiene, Data Privacy & Regulatory Compliance Pulse',
+      'Assesses adherence to security protocols, data classification awareness, privacy-by-design principles, and audit readiness.',
       [
-        _openEnded('Describe a successful initiative where an external partner or vendor integration significantly boosted internal performance.'),
-        _openEnded('What friction points exist when collaborating with third-party vendors, suppliers, or external platforms?'),
-        _likert('External vendor relationships and partner integrations are managed efficiently to meet business SLAs.'),
-        _likert('Our organization selects and collaborates with external partners who uphold our standards of execution.'),
+        _openEnded('Describe how your team successfully balanced strict security or data privacy constraints with rapid delivery timelines.'),
+        _openEnded('What security compliance workflow or access request process currently creates the most operational drag for your team?'),
+        _likert('Security and data protection standards are embedded into our planning rather than treated as an afterthought.'),
+        _likert('Team members receive clear guidance on data residency, access governance, and regional regulatory compliance.'),
         _values(),
-        _excellence('Commit to excellence: Extend high operational standards to external partnerships and maintain reliable ecosystem synergy.'),
+        _excellence('Commit to excellence: Embed unyielding security standards, respect user privacy, and maintain flawless compliance integrity.'),
       ]),
   ];
 }
@@ -226,64 +226,64 @@ function _tpl360(name, desc, questions) {
 }
 function _build360Templates() {
   return [
-    _tpl360('360° Strategic Alignment & Long-Term Horizon Audit',
-      'Evaluates vision cascading, multi-year roadmap execution, goal prioritization, and alignment of tactical work with broad strategy.',
+    _tpl360('360° Innovation Velocity & Experimentation Mindset',
+      'Assesses appetite for calculated risk-taking, rapid prototyping culture, learning from failure, and creative problem-solving agility.',
       [
-        _openEnded('Describe a situation where this person successfully aligned their team\'s daily priorities with the company\'s multi-year strategic vision.'),
-        _openEnded('Where should this person place greater focus when balancing immediate, urgent tasks against long-term strategic objectives?'),
-        _likert('This person effectively translates overarching company strategy into clear, actionable priorities for their team.'),
-        _likert('This person evaluates opportunities and trade-offs through the lens of long-term strategic value rather than short-term fixes.'),
-        _likert('This person maintains strategic focus and prevents team derailment amidst shifting corporate or market priorities.'),
+        _openEnded('Describe a project where this person introduced an unconventional solution or challenged established practices to drive innovation.'),
+        _openEnded('How could this person better encourage iterative experimentation while maintaining baseline operational predictability?'),
+        _likert('This person actively champions creative problem-solving and encourages teams to explore novel approaches.'),
+        _likert('This person treats project setbacks as actionable learning opportunities rather than assignable blame.'),
+        _likert('This person moves swiftly from conceptual ideas to low-fidelity prototypes to validate key assumptions early.'),
         _values(),
-        _excellence('Commit to excellence: Anchor execution in strategic clarity, balance immediate wins with long-term vision, and cascade focus.'),
+        _excellence('Commit to excellence: Cultivate bold curiosity, de-risk ideas through fast iteration, and turn insights into breakthroughs.'),
       ]),
 
-    _tpl360('360° Crisis Leadership & Incident Response Composure Diagnostic',
-      'Assesses operational calm under high pressure, rapid emergency decision-making, stakeholder communication during outages, and post-mortem execution.',
+    _tpl360('360° Operational Simplicity & Friction Reduction Index',
+      'Measures dedication to eliminating bureaucratic waste, streamlining complex handoffs, simplifying workflows, and maximizing output velocity.',
       [
-        _openEnded('Provide an example of a high-stakes incident or operational crisis where this person demonstrated strong composure and decisive leadership.'),
-        _openEnded('How could this person refine their delegation or communication approach during urgent, time-sensitive incidents?'),
-        _likert('This person remains calm, decisive, and highly effective when managing unforeseen operational emergencies or critical outages.'),
-        _likert('This person maintains transparent, timely communication with key stakeholders throughout high-pressure incidents.'),
-        _likert('This person ensures thorough root-cause analysis is conducted following incidents to prevent systemic recurrence.'),
+        _openEnded('Give an example of a workflow, process, or handoff that this person significantly simplified or de-cluttered.'),
+        _openEnded('Where does this person introduce unnecessary complexity or administrative overhead in day-to-day coordination?'),
+        _likert('This person proactively audits recurring processes to eliminate redundant approval steps and operational drag.'),
+        _likert('This person communicates expectations, requirements, and directives with crisp clarity and zero ambiguity.'),
+        _likert('This person designs scalable workflows that make it exceptionally easy for colleagues to execute independently.'),
         _values(),
-        _excellence('Commit to excellence: Lead with composure during crises, drive rapid resolution, and fortify long-term operational resilience.'),
+        _excellence('Commit to excellence: Relentlessly remove operational friction, streamline systems, and champion radical simplicity.'),
       ]),
 
-    _tpl360('360° Cross-Functional Synergy & Matrix Leadership Evaluation',
-      'Measures non-hierarchical influence, lateral relationship building, silo breakdown, and collaborative alignment across business units.',
+    _tpl360('360° Stakeholder Trust & Executive Transparency Audit',
+      'Evaluates authentic communication, proactive bad-news management, boundary setting, and bidirectional credibility with senior stakeholders.',
       [
-        _openEnded('Describe an instance where this person successfully drove alignment and built momentum across partner teams without direct authority.'),
-        _openEnded('What adjustment could this person make to build stronger collaborative relationships with lateral department leaders?'),
-        _likert('This person actively breaks down operational silos to foster genuine, high-trust cross-functional partnerships.'),
-        _likert('This person effectively influences decisions and outcomes across team boundaries without relying on hierarchical authority.'),
-        _likert('This person balances their own department\'s goals against broader inter-departmental and company-wide interests.'),
+        _openEnded('Describe how this person handled a sensitive or difficult conversation with executive leadership or major stakeholders.'),
+        _openEnded('In what scenarios could this person be more proactive in flagging project roadblocks or shifting expectations?'),
+        _likert('This person communicates bad news, risks, and blockers early and transparently without sugarcoating.'),
+        _likert('This person establishes strong credibility by consistently delivering against commitments made to senior leadership.'),
+        _likert('This person navigates conflicting stakeholder priorities with diplomacy while maintaining objective project boundaries.'),
         _values(),
-        _excellence('Commit to excellence: Build lasting matrix relationships, break down organizational silos, and drive enterprise synergy.'),
+        _excellence('Commit to excellence: Build unshakeable stakeholder trust through unwavering candor, proactive transparency, and follow-through.'),
       ]),
 
-    _tpl360('360° Data Governance, Risk & Ethical Compliance Barometer',
-      'Gauges commitment to data privacy, regulatory standards compliance, risk mitigation transparency, and ethical decision-making standards.',
+    _tpl360('360° Continuous Feedback & Growth Coaching Diagnostic',
+      'Gauges the frequency, specificity, and receptivity of real-time coaching, constructive feedback delivery, and reciprocal feedback seeking.',
       [
-        _openEnded('Describe a scenario where this person championed regulatory compliance, data privacy, or ethical considerations during project planning.'),
-        _openEnded('How can this person make their decision-making process even more transparent regarding security, compliance, or risk governance?'),
-        _likert('This person consistently models high ethical standards, transparency, and integrity in all professional interactions.'),
-        _likert('This person ensures team processes strictly comply with legal, regulatory, security, and internal governance standards.'),
-        _likert('This person proactively identifies, flags, and mitigates operational and compliance risks before they escalate.'),
+        _openEnded('Share an instance where this person delivered actionable, high-impact feedback that helped a peer or direct report level up.'),
+        _openEnded('How effectively does this person receive, process, and act upon critical feedback provided by others?'),
+        _likert('This person delivers timely, constructive, and empathetic feedback in the flow of daily work.'),
+        _likert('This person visibly models humility by actively soliciting critical input on their own leadership and performance.'),
+        _likert('This person partners with colleagues to co-create actionable development plans based on real-time feedback loops.'),
         _values(),
-        _excellence('Commit to excellence: Uphold unyielding ethical standards, lead with transparency, and champion compliance integrity.'),
+        _excellence('Commit to excellence: Accelerate growth through continuous feedback loops, high self-awareness, and relentless coaching.'),
       ]),
 
-    _tpl360('360° Commercial Acumen & ROI Realization Diagnostic',
-      'Examines P&L awareness, resource efficiency optimization, value creation focus, and commercial rationale behind technical/operational investments.',
+    _tpl360('360° Enterprise Systems Thinking & Dependency Governance',
+      'Examines cross-system architectural awareness, proactive ripple-effect management, dependency decoupling, and whole-organization awareness.',
       [
-        _openEnded('Describe a time when this person proposed or executed an initiative that generated tangible cost savings, revenue growth, or efficiency gains.'),
-        _openEnded('Where can this person better evaluate the financial return or commercial impact before committing resources to a project?'),
-        _likert('This person demonstrates a strong understanding of business financial drivers and aligns operations with value creation.'),
-        _likert('This person rigorously evaluates the return on investment (ROI) and resource trade-offs for proposed initiatives.'),
-        _likert('This person manages budget, time, and human resources with high accountability and fiscal discipline.'),
+        _openEnded('Describe a complex initiative where this person successfully mapped and mitigated hidden dependencies across multiple domains.'),
+        _openEnded('How could this person better anticipate downstream consequences when rolling out major process or technical changes?'),
+        _likert('This person evaluates local optimizations through the lens of overall enterprise architecture and system health.'),
+        _likert('This person proactively identifies and decouples cross-team dependencies before they manifest as critical blockers.'),
+        _likert('This person balances deep functional expertise with a wide, holistic view of the entire organizational ecosystem.'),
         _values(),
-        _excellence('Commit to excellence: Maximize value creation, practice prudent resource allocation, and drive measurable return on investment.'),
+        _excellence('Commit to excellence: Think in whole systems, anticipate cross-domain ripple effects, and engineer resilient architectures.'),
       ]),
   ];
 }
@@ -324,11 +324,11 @@ export async function create360Template() {
 }
 
 const SURVEY_360_NAMES = [
-  'Architectural Vision & Systemic Scale 360',
-  'Strategic Negotiation & Vendor Governance 360',
-  'Data Rigor & Quantitative Decision-Making 360',
-  'User Empathy & Product Experience 360',
-  'Talent Enablement & Peer Coaching 360',
+  'Innovation Velocity & Experimentation Mindset 360',
+  'Operational Simplicity & Friction Reduction 360',
+  'Stakeholder Trust & Executive Transparency 360',
+  'Continuous Feedback & Growth Coaching 360',
+  'Systems Thinking & Dependency Governance 360',
 ];
 
 // Step 3: Create 360 Survey — creates 5 360-type surveys via launch_multiple_survey
@@ -474,37 +474,20 @@ export async function create360Survey() {
 }
 
 const REPORT_360_NAMES = [
-  'Leadership 360 Report',
-  'Cross-Functional 360 Report',
-  'Execution Excellence 360 Report',
-  'Growth Mindset 360 Report',
-  'Communication 360 Report',
-]
+  'Operational Resilience & Crisis Leadership 360 Report',
+  'Strategic Vision & Horizon Alignment 360 Report',
+  'Governance, Risk Integrity & Ethical Leadership 360 Report',
+  'Commercial Acumen & Fiscal Stewardship 360 Report',
+  'Continuous Feedback & Capability Coaching 360 Report',
+];
 
-// Step 4: Create 360 Report — create_system_report → link template+survey → publish
+// Step 4: Create 360 Report — create_system_report → search 360 templates → get that
+// template's survey group → link both in a single update_system_report PATCH → publish.
 export async function create360Report() {
-  // Get 360 template IDs
-  let templateIds = state.survey360TemplateIds || (state.survey360TemplateId ? [state.survey360TemplateId] : [])
-  if (!templateIds.length) {
-    const r = await api('/surveyms/get_template_for_org?is_reduced_data=true', {
-      method: 'POST',
-      body: JSON.stringify({ offset: 1, limit: 50, filters: { name: [], status: ['PUBLISHED'], type: ['360'] }, sort: { sort_field: 'created_at', sort_order: 'desc' } }),
-    })
-    const raw = r.data
-    const results = Array.isArray(raw?.data) ? raw.data
-      : Array.isArray(raw?.results) ? raw.results
-      : Array.isArray(raw?.data?.data) ? raw.data.data
-      : []
-    templateIds = results.map(t => t.id).filter(Boolean)
-    if (templateIds.length) { state.survey360TemplateIds = templateIds; state.survey360TemplateId = templateIds[0]; saveState() }
-  }
-  if (!templateIds.length) return { ok: false, message: 'No 360 templates found. Run "Create 360 Template" first.' }
-
   const created = [], failed = []
 
-  for (let i = 0; i < Math.min(REPORT_360_NAMES.length, templateIds.length); i++) {
+  for (let i = 0; i < REPORT_360_NAMES.length; i++) {
     const reportName = REPORT_360_NAMES[i]
-    const templateId = templateIds[i]
 
     // Step 1: Create system report
     const r1 = await api('/surveyms/create_system_report', {
@@ -517,30 +500,44 @@ export async function create360Report() {
     const srId = r1.data?.id || r1.data?.data?.id || r1.data?.sr_id || r1.data?.data?.sr_id
     if (!srId) { console.warn('[create360Report] no sr_id in response:', JSON.stringify(r1.data)); failed.push(`${reportName} (no sr_id)`); continue }
 
-    // Step 2: Get survey groups for this template
-    const r2 = await api(`/surveyms/get_survey_group_from_template?template_id=${templateId}`)
-    const sgList = Array.isArray(r2.data?.data) ? r2.data.data : Array.isArray(r2.data) ? r2.data : []
-    const sg = sgList.find(s => s.status === 'Active') || sgList[0]
-    console.log(`[create360Report] survey group for template ${templateId}:`, sg?.id, sg?.status)
-
-    // Step 3: Link template + survey group to report
-    await api(`/surveyms/update_system_report?sr_id=${srId}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ template_id: templateId }),
+    // Step 2: Search 360-type templates for this org
+    const r2 = await api('/surveyms/get_template_for_org?is_reduced_data=true', {
+      method: 'POST',
+      body: JSON.stringify({ offset: 1, filters: { type: '360', name: [''] }, is_reduced_data: true }),
     })
-    if (sg?.id) {
-      await api(`/surveyms/update_system_report?sr_id=${srId}`, {
-        method: 'PATCH',
-        body: JSON.stringify({ survey_group_id: sg.id }),
-      })
-    }
+    const templates = Array.isArray(r2.data?.data) ? r2.data.data
+      : Array.isArray(r2.data?.results) ? r2.data.results
+      : Array.isArray(r2.data?.data?.data) ? r2.data.data.data
+      : []
+    const template = templates.length ? templates[i % templates.length] : null
+    if (!template?.id) { failed.push(`${reportName} (no 360 template found)`); continue }
+    console.log(`[create360Report] using template for "${reportName}":`, template.id, template.name)
 
-    // Step 4: Publish report
-    const r3 = await api(`/surveyms/publish_system_report?sr_id=${srId}`)
-    console.log(`[create360Report] publish "${reportName}":`, r3.status, JSON.stringify(r3.data)?.slice(0, 100))
+    // Step 3: Get the survey group(s) available for that template
+    const r3 = await api(`/surveyms/get_survey_group_from_template?template_id=${template.id}`)
+    const sgList = Array.isArray(r3.data?.data) ? r3.data.data : Array.isArray(r3.data) ? r3.data : []
+    const sg = sgList.find(s => s.status === 'Active') || sgList[0]
+    console.log(`[create360Report] survey group for template ${template.id}:`, sg?.id, sg?.status)
+    if (!sg?.id) { failed.push(`${reportName} (no survey group for template)`); continue }
 
-    if (r3.ok) created.push(reportName)
-    else failed.push(`${reportName} (publish ${r3.status})`)
+    // Step 4: Link template + survey group to the report — one PATCH, matching the
+    // real payload shape: template as {id, name}, selected_survey_groups as an array.
+    const r4 = await api(`/surveyms/update_system_report?sr_id=${srId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        template: { id: template.id, name: template.name },
+        selected_survey_groups: [sg.id],
+      }),
+    })
+    console.log(`[create360Report] update "${reportName}":`, r4.status, JSON.stringify(r4.data)?.slice(0, 200))
+    if (!r4.ok) { failed.push(`${reportName} (update ${r4.status})`); continue }
+
+    // Step 5: Publish report
+    const r5 = await api(`/surveyms/publish_system_report?sr_id=${srId}`)
+    console.log(`[create360Report] publish "${reportName}":`, r5.status, JSON.stringify(r5.data)?.slice(0, 100))
+
+    if (r5.ok) created.push(reportName)
+    else failed.push(`${reportName} (publish ${r5.status})`)
   }
 
   if (!created.length) return { ok: false, message: `All reports failed: ${failed.join(', ')}` }
@@ -549,11 +546,11 @@ export async function create360Report() {
 }
 
 const SURVEY_NAMES = [
-  'Organizational Agility & Change Readiness Survey',
-  'Customer Value & Operational Craftsmanship Audit',
-  'Psychological Safety & Workplace Inclusion Pulse',
-  'Systems Scalability & Tooling Efficacy Diagnostic',
-  'Talent Enablement & Continuous Growth Assessment',
+  'Developer Velocity & Engineering Friction Audit',
+  'Total Rewards & Career Mobility Sentiment Pulse',
+  'Product-Led Growth & Customer Empathy Diagnostic',
+  'Operational Resilience & Crisis Preparedness Barometer',
+  'Innovation Culture & Psychological Safety Survey',
 ];
 
 // Step 4: Create Survey — creates 5 engagement surveys and publishes them
@@ -664,13 +661,13 @@ export async function createSurvey() {
 }
 
 const NOMINATION_NAMES = [
-  'Beacon of Integrity Distinction',
-  'Mastery in Innovation Award',
-  'Unsung Hero Recognition',
-  'Customer Success Champion Honor',
-  'Pioneer of Sustainability Tribute',
-  'Empowerment & Inclusion Vanguard',
-  'Systems Synergy & Scaling Award',
+  'Architect of Continuous Improvement',
+  'Champion of Collaborative Velocity',
+  'Frontier Problem Solver Honor',
+  'Guardian of Organizational Trust',
+  'Transformational Mentorship Award',
+  'Excellence in Precision & Craft Distinction',
+  'Strategic Horizon Builder Tribute',
 ];
 // Step 3: Create Nomination — creates 7 feedback nominations linked to groups
 export async function createNomination() {

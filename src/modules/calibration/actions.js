@@ -3,13 +3,13 @@ import { state, saveState } from '../../core/state.js'
 import { _uuid } from '../../core/helpers.js'
 
 const CALIBRATION_NAMES = [
-  'Talent Consensus & Equity Forum',
-  'Strategic Performance Distribution Review',
-  'Leadership Merit & Benchmarking Council',
-  'Enterprise Rating Alignment Session',
-  'Cross-Functional Performance Audit',
-  'Organizational Talent Parity Review',
-  'Executive Capability & Calibration Board',
+  'Cross-Domain Merit & Impact Council',
+  'Talent Density & Capability Calibration',
+  'Objective Performance Parity Forum',
+  'Strategic Leveling & Equity Alignment',
+  'Enterprise Output Calibration Board',
+  'Organizational Benchmark & Consensus Panel',
+  'Executive Talent Rigor & Distribution Review',
 ];
 
 async function _createOneCalibration({ name, reviewId, ratingScaleId }) {

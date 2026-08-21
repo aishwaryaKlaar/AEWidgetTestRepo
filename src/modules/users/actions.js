@@ -1,4 +1,4 @@
-import { api, getWorkspaceId, getEmailFromJwt, getAdminUserIdFromJwt, API_BASE, buildHeaders } from '../../core/api.js'
+import { api, getWorkspaceId, getEmailFromJwt, getAdminUserIdFromJwt, getOrgUserIdFromJwt, API_BASE, buildHeaders } from '../../core/api.js'
 import { state, saveState } from '../../core/state.js'
 import { buildEmployeePayload, findUserByName, notImplemented, errorBodyText, searchResults } from '../../core/helpers.js'
 import { fetchUsers } from '../../utils/fetchUsers.js'
@@ -7,12 +7,12 @@ import { setupCloudflareSubdomain } from '../../core/cloudflare.js'
 import { ensureMigaduDomain, activateMigaduDomain, createMigaduMailbox } from '../../core/migadu.js'
 
 const DUMMY_ROLES = [
-  'Talent Growth Architect',
-  'Strategic Transformation Partner',
-  'Revenue Operations Specialist',
-  'Global Integration Lead',
-  'Organizational Effectiveness Director',
-  'Client Experience Strategist',
+  'Autonomous Systems Strategist',
+  'Workforce Transformation Director',
+  'Telemetry & Observability Specialist',
+  'Revenue Operations & Pricing Lead',
+  'Distributed Infrastructure Architect',
+  'API Governance & Standards Principal',
 ];
 
 // Step 3: Add Roles — creates 6 HR workspace roles
@@ -112,186 +112,185 @@ const SEED_DETAILS = {
   'xi.ling':          { mobile_number: '+16124123419', grade: 'Org Band 3A' },
 }
 
-// is_manager_role: true  → created by addManagers() (4 users)
-// is_manager_role: false → created by addEmployees() (6 users)
-// Both steps then PUT all 10 with full profile (phone, BU, level, manager, hrbp, etc.)
+// is_manager_role: true  → created + PUT with full profile by addManagers() (4 users)
+// is_manager_role: false → created + PUT with full profile by addEmployees() (6 users)
 const DUMMY_USERS = [
   { 
-    full_name: 'Alistair Pendelton', 
-    email_prefix: 'alistair.pendelton', 
-    phone: '+1 4155556101', 
+    full_name: 'Barnaby Sterling', 
+    email_prefix: 'barnaby.sterling', 
+    phone: '+1 4155553301', 
     gender: 'Male',
     department: 'Executive Office', 
-    business_unit: 'BU1', 
+    business_unit: 'Commercial',
     title: 'Chief Executive Officer',
     level: 'Org Band 8A', 
     location: 'San Francisco, USA', 
     employment_type: 'Full Time',
-    date_of_joining: '1996-01-13', 
+    date_of_joining: '1990-04-18', 
     manager_prefix: null, 
-    hrbp_prefix: 'beatrice.kingsford',
+    hrbp_prefix: 'clara.pemberton',
     is_admin: false, 
     is_hrbp: false, 
     is_manager_role: true 
   },
   { 
-    full_name: 'Beatrice Kingsford', 
-    email_prefix: 'beatrice.kingsford', 
-    phone: '+1 2125556102',  
+    full_name: 'Clara Pemberton', 
+    email_prefix: 'clara.pemberton', 
+    phone: '+1 2125553302',  
     gender: 'Female',
     department: 'People & Culture', 
-    business_unit: 'BU1',  
+    business_unit: 'Commercial', 
     title: 'Chief People Officer',
     level: 'Org Band 7A', 
     location: 'New York, USA',  
     employment_type: 'Full Time',
-    date_of_joining: '1998-05-18',  
-    manager_prefix: 'alistair.pendelton', 
+    date_of_joining: '1992-08-22',  
+    manager_prefix: 'barnaby.sterling', 
     hrbp_prefix: null,
     is_admin: true, 
     is_hrbp: true, 
     is_manager_role: true 
   },
   { 
-    full_name: 'Caspian Whitmore',  
-    email_prefix: 'caspian.whitmore',  
-    phone: '+44 2079466103', 
+    full_name: 'Dominic Croft',  
+    email_prefix: 'dominic.croft',  
+    phone: '+44 2079463303', 
     gender: 'Male',
     department: 'Sales',            
-    business_unit: 'BU1',  
+    business_unit: 'Commercial', 
     title: 'Chief Revenue Officer',
     level: 'Org Band 7A', 
     location: 'London, UK',        
     employment_type: 'Full Time',
-    date_of_joining: '2001-07-23',  
-    manager_prefix: 'alistair.pendelton', 
-    hrbp_prefix: 'beatrice.kingsford',
+    date_of_joining: '1995-11-14',  
+    manager_prefix: 'barnaby.sterling', 
+    hrbp_prefix: 'clara.pemberton',
     is_admin: false, 
     is_hrbp: false, 
     is_manager_role: true 
   },
   { 
-    full_name: 'Dahlia Prescott', 
-    email_prefix: 'dahlia.prescott', 
-    phone: '+91 8045676104', 
+    full_name: 'Eleanor Vance', 
+    email_prefix: 'eleanor.vance', 
+    phone: '+91 8045673304', 
     gender: 'Female',
     department: 'Engineering',        
-    business_unit: 'BU2',  
+    business_unit: 'Enterprise Growth',
     title: 'VP, Engineering',
     level: 'Org Band 6A', 
     location: 'Bengaluru, India',  
     employment_type: 'Full Time',
-    date_of_joining: '2003-09-15',  
-    manager_prefix: 'alistair.pendelton', 
-    hrbp_prefix: 'ezra.sinclair',
+    date_of_joining: '1997-06-03',  
+    manager_prefix: 'barnaby.sterling', 
+    hrbp_prefix: 'felix.kensington',
     is_admin: false, 
     is_hrbp: false, 
     is_manager_role: true 
   },
   { 
-    full_name: 'Ezra Sinclair',  
-    email_prefix: 'ezra.sinclair',   
-    phone: '+971 45556105',  
+    full_name: 'Felix Kensington',  
+    email_prefix: 'felix.kensington',   
+    phone: '+971 45553305',  
     gender: 'Male',
     department: 'People & Culture - BU2',  
-    business_unit: 'BU2',  
+    business_unit: 'Enterprise Growth',
     title: 'Director, People & Culture',
     level: 'Org Band 5A',  
     location: 'Dubai, UAE',        
     employment_type: 'Full Time',
-    date_of_joining: '2004-04-12',  
-    manager_prefix: 'beatrice.kingsford',     
+    date_of_joining: '1999-02-17',  
+    manager_prefix: 'clara.pemberton',     
     hrbp_prefix: null,
     is_admin: false, 
     is_hrbp: true, 
-    is_manager_role: false 
+    is_manager_role: true 
   },
   { 
-    full_name: 'Fiona Vanderbilt',    
-    email_prefix: 'fiona.vanderbilt',    
-    phone: '+44 2079466106', 
+    full_name: 'Gemma Blackwood',    
+    email_prefix: 'gemma.blackwood',    
+    phone: '+44 2079463306', 
     gender: 'Female',
     department: 'Sales',            
-    business_unit: 'BU1',  
+    business_unit: 'Commercial', 
     title: 'Director, Account Management',
     level: 'Org Band 4A', 
     location: 'London, UK',        
     employment_type: 'Full Time',
-    date_of_joining: '2006-02-20',  
-    manager_prefix: 'caspian.whitmore',      
-    hrbp_prefix: 'beatrice.kingsford',
+    date_of_joining: '2001-05-19',  
+    manager_prefix: 'dominic.croft',      
+    hrbp_prefix: 'clara.pemberton',
     is_admin: false, 
     is_hrbp: false, 
     is_manager_role: false 
   },
   { 
-    full_name: 'Gideon Mercer',    
-    email_prefix: 'gideon.mercer',    
-    phone: '+65 81236107',    
+    full_name: 'Harrison Drake',    
+    email_prefix: 'harrison.drake',    
+    phone: '+65 81233307',    
     gender: 'Male',
     department: 'Engineering',        
-    business_unit: 'BU2',  
+    business_unit: 'Enterprise Growth',
     title: 'Staff Engineer',
     level: 'Org Band 3B', 
     location: 'Singapore, Singapore', 
     employment_type: 'Full Time',
-    date_of_joining: '2007-06-11',  
-    manager_prefix: 'dahlia.prescott',        
-    hrbp_prefix: 'ezra.sinclair',
+    date_of_joining: '2002-11-25',  
+    manager_prefix: 'eleanor.vance',        
+    hrbp_prefix: 'felix.kensington',
     is_admin: false, 
     is_hrbp: false, 
     is_manager_role: false 
   },
   { 
-    full_name: 'Helena Fontaine',      
-    email_prefix: 'helena.fontaine',      
-    phone: '+1 2125556108',  
+    full_name: 'Imogen Ashford',      
+    email_prefix: 'imogen.ashford',      
+    phone: '+1 2125553308',  
     gender: 'Female',
     department: 'Sales',            
-    business_unit: 'BU1',  
+    business_unit: 'Commercial', 
     title: 'Account Executive',
     level: 'Org Band 2B', 
     location: 'New York, USA',    
     employment_type: 'Full Time',
-    date_of_joining: '2008-10-27',  
-    manager_prefix: 'caspian.whitmore',      
-    hrbp_prefix: 'beatrice.kingsford',
+    date_of_joining: '2003-09-08',  
+    manager_prefix: 'dominic.croft',      
+    hrbp_prefix: 'clara.pemberton',
     is_admin: false, 
     is_hrbp: false, 
     is_manager_role: false 
   },
   { 
-    full_name: 'Julian Ashford',  
-    email_prefix: 'julian.ashford',  
-    phone: '+91 8045676109',  
+    full_name: 'Julian Finch',  
+    email_prefix: 'julian.finch',  
+    phone: '+91 8045673309',  
     gender: 'Male',
     department: 'Engineering',        
-    business_unit: 'BU2',  
+    business_unit: 'Enterprise Growth',
     title: 'Software Engineer II',
     level: 'Org Band 2A', 
     location: 'Bengaluru, India',  
     employment_type: 'Full Time',
-    date_of_joining: '2009-03-16',  
-    manager_prefix: 'dahlia.prescott',        
-    hrbp_prefix: 'ezra.sinclair',
+    date_of_joining: '2004-07-12',  
+    manager_prefix: 'eleanor.vance',        
+    hrbp_prefix: 'felix.kensington',
     is_admin: false, 
     is_hrbp: false, 
     is_manager_role: false 
   },
   { 
-    full_name: 'Kendra Reyes',     
-    email_prefix: 'kendra.reyes',     
-    phone: '+971 45556110',  
+    full_name: 'Kira Holloway',     
+    email_prefix: 'kira.holloway',     
+    phone: '+971 45553310',  
     gender: 'Female',
     department: 'People & Culture - BU2',  
-    business_unit: 'BU2',  
+    business_unit: 'Enterprise Growth',
     title: 'People Ops Associate',
     level: 'Org Band 1B', 
     location: 'Dubai, UAE',        
     employment_type: 'Full Time',
-    date_of_joining: '2010-01-18',  
-    manager_prefix: 'ezra.sinclair',      
-    hrbp_prefix: 'ezra.sinclair',
+    date_of_joining: '2005-03-29',  
+    manager_prefix: 'felix.kensington',      
+    hrbp_prefix: 'felix.kensington',
     is_admin: false, 
     is_hrbp: false, 
     is_manager_role: false 
@@ -326,31 +325,31 @@ const DEPTS = ['Corporate Strategy', 'Talent Management', 'Operations', 'Busines
 const BUS   = ['Enterprise Growth', 'People & Culture', 'Commercial']
 
 const BULK_USERS = [
-  { full_name: 'Arthur Pendelton',    email_prefix: 'arthur.pendelton',    department: DEPTS[0], business_unit: BUS[0] },
-  { full_name: 'Beatrix Vane',        email_prefix: 'beatrix.vane',        department: DEPTS[1], business_unit: BUS[1] },
-  { full_name: 'Cassian Oakridge',    email_prefix: 'cassian.oakridge',    department: DEPTS[2], business_unit: BUS[2] },
-  { full_name: 'Dorothea Vance',      email_prefix: 'dorothea.vance',      department: DEPTS[3], business_unit: BUS[0] },
-  { full_name: 'Ebenezer Croft',      email_prefix: 'ebenezer.croft',      department: DEPTS[0], business_unit: BUS[1] },
-  { full_name: 'Felicity Starling',   email_prefix: 'felicity.starling',   department: DEPTS[1], business_unit: BUS[2] },
-  { full_name: 'Gareth Nightfall',    email_prefix: 'gareth.nightfall',    department: DEPTS[2], business_unit: BUS[0] },
-  { full_name: 'Henrietta Sterling',  email_prefix: 'henrietta.sterling',  department: DEPTS[3], business_unit: BUS[1] },
-  { full_name: 'Ignatius Blackwood',  email_prefix: 'ignatius.blackwood',  department: DEPTS[0], business_unit: BUS[2] },
-  { full_name: 'Juliet Kingswood',    email_prefix: 'juliet.kingswood',    department: DEPTS[1], business_unit: BUS[0] },
-  { full_name: 'Kaelan Mercer',       email_prefix: 'kaelan.mercer',       department: DEPTS[2], business_unit: BUS[1] },
-  { full_name: 'Lysandra Fairchild',  email_prefix: 'lysandra.fairchild',  department: DEPTS[3], business_unit: BUS[2] },
-  { full_name: 'Maximilian Ashford',  email_prefix: 'maximilian.ashford',  department: DEPTS[0], business_unit: BUS[0] },
-  { full_name: 'Nicolette Thorne',    email_prefix: 'nicolette.thorne',    department: DEPTS[1], business_unit: BUS[1] },
-  { full_name: 'Orson Kensington',    email_prefix: 'orson.kensington',    department: DEPTS[2], business_unit: BUS[2] },
-  { full_name: 'Priscilla Eldridge',  email_prefix: 'priscilla.eldridge',  department: DEPTS[3], business_unit: BUS[0] },
-  { full_name: 'Quinton Stanhope',    email_prefix: 'quinton.stanhope',    department: DEPTS[0], business_unit: BUS[1] },
-  { full_name: 'Rosalind Winslow',    email_prefix: 'rosalind.winslow',    department: DEPTS[1], business_unit: BUS[2] },
-  { full_name: 'Silas Radcliffe',     email_prefix: 'silas.radcliffe',     department: DEPTS[2], business_unit: BUS[0] },
-  { full_name: 'Theadora Prescott',   email_prefix: 'theadora.prescott',   department: DEPTS[3], business_unit: BUS[1] },
-  { full_name: 'Ulysses Abernathy',   email_prefix: 'ulysses.abernathy',   department: DEPTS[0], business_unit: BUS[2] },
-  { full_name: 'Valerie Whitmore',    email_prefix: 'valerie.whitmore',    department: DEPTS[1], business_unit: BUS[0] },
-  { full_name: 'Wilfred Kingsford',   email_prefix: 'wilfred.kingsford',   department: DEPTS[2], business_unit: BUS[1] },
-  { full_name: 'Ximena Ravenscroft',  email_prefix: 'ximena.ravenscroft',  department: DEPTS[3], business_unit: BUS[2] },
-  { full_name: 'Yevgeny Harrington',  email_prefix: 'yevgeny.harrington',  department: DEPTS[0], business_unit: BUS[0] },
+  { full_name: 'Arthur Albright',       email_prefix: 'arthur.albright',       department: DEPTS[0], business_unit: BUS[0] },
+  { full_name: 'Blythe Callahan',       email_prefix: 'blythe.callahan',       department: DEPTS[1], business_unit: BUS[1] },
+  { full_name: 'Callum Devereux',       email_prefix: 'callum.devereux',       department: DEPTS[2], business_unit: BUS[2] },
+  { full_name: 'Delphine Holloway',     email_prefix: 'delphine.holloway',     department: DEPTS[3], business_unit: BUS[0] },
+  { full_name: 'Evander Thorne',        email_prefix: 'evander.thorne',        department: DEPTS[0], business_unit: BUS[1] },
+  { full_name: 'Flora Macallister',     email_prefix: 'flora.macallister',     department: DEPTS[1], business_unit: BUS[2] },
+  { full_name: 'Griffin Beaumont',      email_prefix: 'griffin.beaumont',      department: DEPTS[2], business_unit: BUS[0] },
+  { full_name: 'Helena Kingsley',       email_prefix: 'helena.kingsley',       department: DEPTS[3], business_unit: BUS[1] },
+  { full_name: 'Inigo Sutherland',      email_prefix: 'inigo.sutherland',      department: DEPTS[0], business_unit: BUS[2] },
+  { full_name: 'Jocelyn Faulkner',      email_prefix: 'jocelyn.faulkner',      department: DEPTS[1], business_unit: BUS[0] },
+  { full_name: 'Killian Drake',         email_prefix: 'killian.drake',         department: DEPTS[2], business_unit: BUS[1] },
+  { full_name: 'Leona Sinclair',        email_prefix: 'leona.sinclair',        department: DEPTS[3], business_unit: BUS[2] },
+  { full_name: 'Miles Huntington',      email_prefix: 'miles.huntington',      department: DEPTS[0], business_unit: BUS[0] },
+  { full_name: 'Nerissa Carlisle',      email_prefix: 'nerissa.carlisle',      department: DEPTS[1], business_unit: BUS[1] },
+  { full_name: 'Octavius Brandt',       email_prefix: 'octavius.brandt',       department: DEPTS[2], business_unit: BUS[2] },
+  { full_name: 'Philippa Lancaster',    email_prefix: 'philippa.lancaster',    department: DEPTS[3], business_unit: BUS[0] },
+  { full_name: 'Quillan Voss',          email_prefix: 'quillan.voss',          department: DEPTS[0], business_unit: BUS[1] },
+  { full_name: 'Rosalind Fairweather',  email_prefix: 'rosalind.fairweather',  department: DEPTS[1], business_unit: BUS[2] },
+  { full_name: 'Sebastian Valerius',    email_prefix: 'sebastian.valerius',    department: DEPTS[2], business_unit: BUS[0] },
+  { full_name: 'Theodora Lockhart',     email_prefix: 'theodora.lockhart',     department: DEPTS[3], business_unit: BUS[1] },
+  { full_name: 'Uriah Pendleton',       email_prefix: 'uriah.pendleton',       department: DEPTS[0], business_unit: BUS[2] },
+  { full_name: 'Vivienne Strathmore',   email_prefix: 'vivienne.strathmore',   department: DEPTS[1], business_unit: BUS[0] },
+  { full_name: 'Warren Ashcroft',       email_prefix: 'warren.ashcroft',       department: DEPTS[2], business_unit: BUS[1] },
+  { full_name: 'Xavier Tremaine',       email_prefix: 'xavier.tremaine',       department: DEPTS[3], business_unit: BUS[2] },
+  { full_name: 'Yvette Montclaire',     email_prefix: 'yvette.montclaire',     department: DEPTS[0], business_unit: BUS[0] },
 ];
 
 // Step 1: Bulk Upload User — creates 25 dummy users one by one (single_mode: true)
@@ -391,11 +390,13 @@ export async function bulkUploadUser() {
     if (i === 0) console.log('[bulkUploadUser] first response:', r.status, (r.text || '').slice(0, 300))
 
     if (r.ok) {
-      created.push({ full_name: u.full_name, email })
+      const uuid = await resolveCreatedUuid(r, email)
+      created.push({ full_name: u.full_name, email, uuid })
     } else {
       const body = errorBodyText(r)
       if (r.status === 400 && (body.includes('exist') || body.includes('already'))) {
-        created.push({ full_name: u.full_name, email, existing: true })
+        const uuid = await resolveCreatedUuid(null, email)
+        created.push({ full_name: u.full_name, email, uuid, existing: true })
       } else {
         failed.push(`${u.full_name} (${r.status})`)
       }
@@ -488,7 +489,97 @@ export async function setupDemoDomain() {
   }
 }
 
-// Step 2a: Add Managers — POST only the 4 manager-role users (no manager/HRBP refs yet)
+// Fetch a param_type's value→UUID map (e.g. business_unit, level, location) — plain
+// strings in PUT fields cause 500, so callers validate against this before sending.
+async function fetchParamMap(paramType) {
+  const map = {}
+  try {
+    let page = 1
+    while (true) {
+      const r = await api(`/um/accounts/workspace_role/meta/param/value/?param_type=${paramType}&page_size=50&page=${page}`)
+      if (!r.ok || !r.data?.results?.length) break
+      for (const rec of r.data.results) {
+        if (rec.value && rec.id) map[rec.value] = rec.id
+      }
+      if (!r.data.next) break
+      page++
+    }
+  } catch (e) {
+    console.warn(`[fetchParamMap] fetchParamMap(${paramType}) error:`, e.message)
+  }
+  console.log(`[fetchParamMap] ${paramType} map (${Object.keys(map).length} entries):`, map)
+  return map
+}
+
+async function fetchWorkspaceParamMaps() {
+  const buUuidMap       = await fetchParamMap('business_unit')
+  const levelUuidMap    = await fetchParamMap('level')
+  const locationUuidMap = await fetchParamMap('location')
+  return { buUuidMap, levelUuidMap, locationUuidMap }
+}
+
+// PUT full profile (phone, BU, level, grade, manager, hrbp, etc.) for the given users.
+// emailToId maps each user's own email → their org_user_id (needed to identify the record).
+async function putUserProfiles(users, domain, emailToId, paramMaps) {
+  const { buUuidMap, levelUuidMap, locationUuidMap } = paramMaps
+  const updated = [], updateFailed = []
+
+  for (let i = 0; i < users.length; i++) {
+    const u = users[i]
+    const email = `${u.email_prefix}@${domain}`
+    // Use UUID from POST response if available; Klaar identifies by email when id is omitted
+    const uuid = emailToId[email.toLowerCase()]?.uuid
+
+    // Send value strings, not UUIDs — meta map used only to validate the value exists
+    const buId       = buUuidMap.hasOwnProperty(u.business_unit) ? u.business_unit : null
+    const levelId    = levelUuidMap.hasOwnProperty(u.level)       ? u.level         : null
+    const locationId = locationUuidMap.hasOwnProperty(u.location) ? u.location      : null
+
+    const putPayload = buildEmployeePayload({
+      email,
+      full_name:     u.full_name,
+      org_user_id:   uuid,   // undefined when encrypted API can't give us the ID
+      status:        'active',
+      department:    u.department,
+      business_unit: buId,
+      title:         u.title,
+      manager_email: u.manager_prefix ? `${u.manager_prefix}@${domain}` : null,
+      roles:         [],
+    }, {
+      mobile_number:        u.phone,
+      gender:               u.gender,
+      date_of_joining:      u.date_of_joining,
+      location:             locationId,
+      level:                levelId,
+      grade:                levelId,
+      hrbp_email:           u.hrbp_prefix ? `${u.hrbp_prefix}@${domain}` : null,
+      is_admin:             u.is_admin ? 'YES' : 'NO',
+      is_employee:          'YES',
+      is_fulltime_employee: u.employment_type === 'Full Time' ? 'YES' : 'NO',
+    })
+
+    if (i === 0) console.log('[putUserProfiles] PUT payload sample:', JSON.stringify(putPayload))
+    console.log(`[putUserProfiles] PUT ${u.full_name} (uuid=${uuid ?? 'none'})…`)
+
+    const rPut = await api('/um/accounts/employee/', {
+      method: 'PUT',
+      body: JSON.stringify(putPayload),
+    })
+
+    if (rPut.ok) {
+      updated.push(u.full_name)
+    } else {
+      console.warn(`[putUserProfiles] PUT failed for ${u.full_name}:`, rPut.status, errorBodyText(rPut).slice(0, 500))
+      updateFailed.push(`${u.full_name} (PUT ${rPut.status})`)
+    }
+    await new Promise(res => setTimeout(res, 200))
+  }
+
+  return { updated, updateFailed }
+}
+
+// Step 2a: Add Managers — POST the 4 manager-role users, then PUT their full profile
+// (phone, BU, level, manager/HRBP refs). Self-contained: does not depend on addEmployees.
 export async function addManagers() {
   const domain = state.emailDomain || await getWorkspaceDomain()
   if (!domain) return { ok: false, message: 'Could not determine workspace email domain. Please try again after logging in.' }
@@ -530,32 +621,13 @@ export async function addManagers() {
 
     if (r.ok) {
       if (created.length === 0) console.log('[addManagers] POST response sample:', JSON.stringify(r.data).slice(0, 400))
-      const dataField = r.data?.data
-      const rec  = Array.isArray(dataField) ? dataField[0]
-        : Array.isArray(r.data?.results)    ? r.data.results[0]
-        : Array.isArray(r.data)             ? r.data[0]
-        : null
-      let uuid = rec?.id || rec?.org_user?.id || rec?.org_user_id
-      if (!uuid) {
-        // Response is encrypted or unexpected shape — search by email to get the UUID
-        const sr = await api(`/um/accounts/employee/?search=${encodeURIComponent(email)}&page_size=5`)
-        const match = searchResults(sr).find(e =>
-          [e.email, e.company_email, e.user?.email, e.work_email].some(em => em?.toLowerCase() === email.toLowerCase())
-        )
-        uuid = match?.org_user?.id || match?.id || match?.user?.id
-        console.log(`[addManagers] ${u.full_name} POST ok but uuid not in response → search → uuid=${uuid}`)
-      }
+      const uuid = await resolveCreatedUuid(r, email)
       console.log(`[addManagers] ${u.full_name} → uuid=${uuid}`)
       created.push({ name: u.full_name, email, uuid })
     } else {
       const bodyText = errorBodyText(r)
       if (r.status === 400 && (bodyText.includes('exist') || bodyText.includes('already'))) {
-        // User already exists — try to find their UUID via search
-        const sr = await api(`/um/accounts/employee/?search=${encodeURIComponent(email)}&page_size=5`)
-        const match = searchResults(sr).find(e =>
-          [e.email, e.company_email, e.user?.email, e.work_email].some(em => em?.toLowerCase() === email.toLowerCase())
-        )
-        const uuid = match?.org_user?.id || match?.id || match?.user?.id
+        const uuid = await resolveCreatedUuid(null, email)
         console.log(`[addManagers] ${u.full_name} already exists → uuid=${uuid}`)
         created.push({ name: u.full_name, email, uuid })
       } else {
@@ -566,36 +638,48 @@ export async function addManagers() {
     await new Promise(res => setTimeout(res, 200))
   }
 
-  state.managers          = created   // [{name, email, uuid}] — used by addEmployees for PUT
+  state.managers          = created   // [{name, email, uuid}]
   state.userDepartments   = [...new Set(DUMMY_USERS.map(u => u.department).filter(Boolean))]
   state.userBusinessUnits = [...new Set(DUMMY_USERS.map(u => u.business_unit).filter(Boolean))]
   saveState()
 
-  if (failed.length) return { ok: false, message: `Created ${created.length}/${managers.length} managers. Failed: ${failed.join(', ')}` }
-  return { ok: true, message: `Created ${created.length} managers on ${domain}. Now click Add Employees.` }
-}
-
-// Helper: find a user's UUID by email (checks all known email fields in the API response)
-async function findEmployeeByEmail(email, logFirst) {
-  const fr = await api(`/um/accounts/employee/?search=${encodeURIComponent(email)}&page_size=10`)
-  if (!fr.ok) return null
-  const results = searchResults(fr)
-  if (logFirst && results.length) {
-    console.log('[findEmployee] sample result keys:', Object.keys(results[0]), '| full:', JSON.stringify(results[0]).slice(0, 500))
+  // PUT full profile (phone, BU, level, manager/HRBP refs) on the managers just created/found —
+  // all 4 already exist by this point, so cross-references between them resolve fine.
+  const emailToId = {}
+  for (const m of created) {
+    if (m.email && m.uuid) emailToId[m.email.toLowerCase()] = { uuid: m.uuid }
   }
-  const match = results.find(e => {
-    const candidates = [e.email, e.company_email, e.user?.email, e.work_email].filter(Boolean)
-    return candidates.some(c => c.toLowerCase() === email.toLowerCase())
-  })
-  if (!match) return null
-  // The org_user UUID may come back as `id`, `org_user_id`, or the same as `user_id`
-  const uuid   = match.org_user?.id || match.id || match.user?.id
-  const userId = match.user?.id || match.org_user?.user_id
-  console.log(`[findEmployee] ${email} → id=${uuid} user_id=${userId}`)
-  return { uuid, userId }
+
+  const paramMaps = await fetchWorkspaceParamMaps()
+  const { updated, updateFailed } = await putUserProfiles(managers, domain, emailToId, paramMaps)
+
+  const allFailed = [...failed, ...updateFailed]
+  if (allFailed.length) return { ok: false, message: `Created ${created.length}/${managers.length} managers, updated ${updated.length}/${managers.length} profiles. Failed: ${allFailed.join(', ')}` }
+  return { ok: true, message: `Created ${created.length} managers + updated ${updated.length} profiles on ${domain}. Now click Add Employees.` }
 }
 
-// Step 2b: Add Employees — POST the 6 non-manager users, then PUT full profile on all 10
+// Resolve a just-created (or already-existing) user's org_user UUID: try the POST response
+// first (r may be null/failed if the user already existed), then fall back to searching by
+// email — handles encrypted/unexpected response shapes and the "already exists" case alike.
+async function resolveCreatedUuid(r, email) {
+  if (r?.ok) {
+    const dataField = r.data?.data
+    const rec = Array.isArray(dataField) ? dataField[0]
+      : Array.isArray(r.data?.results)    ? r.data.results[0]
+      : Array.isArray(r.data)             ? r.data[0]
+      : null
+    const uuid = rec?.id || rec?.org_user?.id || rec?.org_user_id
+    if (uuid) return uuid
+  }
+  const sr = await api(`/um/accounts/employee/?search=${encodeURIComponent(email)}&page_size=5`)
+  const match = searchResults(sr).find(e =>
+    [e.email, e.company_email, e.user?.email, e.work_email].some(em => em?.toLowerCase() === email.toLowerCase())
+  )
+  return match?.org_user?.id || match?.id || match?.user?.id
+}
+
+// Step 2b: Add Employees — POST the 6 non-manager users, then PUT full profile on those 6
+// (managers get their full profile from addManagers() instead — see that function).
 export async function addEmployees() {
   const domain = state.emailDomain || await getWorkspaceDomain()
   if (!domain) return { ok: false, message: 'Could not determine workspace email domain. Please try again after logging in.' }
@@ -638,31 +722,13 @@ export async function addEmployees() {
 
     if (r.ok) {
       if (postCreated.length === 0) console.log('[addEmployees] POST response sample:', JSON.stringify(r.data).slice(0, 400))
-      const dataField = r.data?.data
-      const rec  = Array.isArray(dataField) ? dataField[0]
-        : Array.isArray(r.data?.results)    ? r.data.results[0]
-        : Array.isArray(r.data)             ? r.data[0]
-        : null
-      let uuid = rec?.id || rec?.org_user?.id || rec?.org_user_id
-      if (!uuid) {
-        // Response is encrypted or unexpected shape — search by email to get the UUID
-        const sr = await api(`/um/accounts/employee/?search=${encodeURIComponent(email)}&page_size=5`)
-        const match = searchResults(sr).find(e =>
-          [e.email, e.company_email, e.user?.email, e.work_email].some(em => em?.toLowerCase() === email.toLowerCase())
-        )
-        uuid = match?.org_user?.id || match?.id || match?.user?.id
-        console.log(`[addEmployees] ${u.full_name} POST ok but uuid not in response → search → uuid=${uuid}`)
-      }
+      const uuid = await resolveCreatedUuid(r, email)
       console.log(`[addEmployees] ${u.full_name} → uuid=${uuid}`)
       postCreated.push({ name: u.full_name, email, uuid })
     } else {
       const body = errorBodyText(r)
       if (r.status === 400 && (body.includes('exist') || body.includes('already'))) {
-        const sr = await api(`/um/accounts/employee/?search=${encodeURIComponent(email)}&page_size=5`)
-        const match = searchResults(sr).find(e =>
-          [e.email, e.company_email, e.user?.email, e.work_email].some(em => em?.toLowerCase() === email.toLowerCase())
-        )
-        const uuid = match?.org_user?.id || match?.id || match?.user?.id
+        const uuid = await resolveCreatedUuid(null, email)
         console.log(`[addEmployees] ${u.full_name} already exists → uuid=${uuid}`)
         postCreated.push({ name: u.full_name, email, uuid })
       } else {
@@ -673,143 +739,123 @@ export async function addEmployees() {
     await new Promise(res => setTimeout(res, 200))
   }
 
-  // Build email→UUID map from IDs saved during POST (most reliable — no listing API needed)
+  // Build email→UUID map from IDs saved during this function's own POSTs
   const emailToId = {}
-  for (const m of (state.managers || [])) {
-    if (m.email && m.uuid) emailToId[m.email.toLowerCase()] = { uuid: m.uuid }
-  }
   for (const e of postCreated) {
     if (e.email && e.uuid) emailToId[e.email.toLowerCase()] = { uuid: e.uuid }
   }
   console.log(`[addEmployees] emailToId from POST responses: ${Object.keys(emailToId).length} entries`, Object.keys(emailToId))
 
-  // Fetch param name→UUID maps — plain strings in PUT fields cause 500
-  async function fetchParamMap(paramType) {
-    const map = {}
-    try {
-      let page = 1
-      while (true) {
-        const r = await api(`/um/accounts/workspace_role/meta/param/value/?param_type=${paramType}&page_size=50&page=${page}`)
-        if (!r.ok || !r.data?.results?.length) break
-        for (const rec of r.data.results) {
-          if (rec.value && rec.id) map[rec.value] = rec.id
-        }
-        if (!r.data.next) break
-        page++
-      }
-    } catch (e) {
-      console.warn(`[addEmployees] fetchParamMap(${paramType}) error:`, e.message)
-    }
-    console.log(`[addEmployees] ${paramType} map (${Object.keys(map).length} entries):`, map)
-    return map
+  // PUT full profile on the 6 employees only — managers were already updated by addManagers()
+  const paramMaps = await fetchWorkspaceParamMaps()
+  const { updated, updateFailed } = await putUserProfiles(employees, domain, emailToId, paramMaps)
+
+  // dummyUsers spans all 10 (managers + employees) — pull manager UUIDs from state.managers
+  // (set by addManagers()) and employee UUIDs from this run's own POSTs.
+  const managerUuidByEmail = {}
+  for (const m of (state.managers || [])) {
+    if (m.email && m.uuid) managerUuidByEmail[m.email.toLowerCase()] = m.uuid
   }
-
-  const buUuidMap       = await fetchParamMap('business_unit')
-  const levelUuidMap    = await fetchParamMap('level')
-  const locationUuidMap = await fetchParamMap('location')
-
-  // PUT full profile on all 10 users (phone, BU, level, grade, manager, hrbp, etc.)
-  const updated = [], updateFailed = []
-
-  for (let i = 0; i < DUMMY_USERS.length; i++) {
-    const u = DUMMY_USERS[i]
+  state.dummyUsers = DUMMY_USERS.map(u => {
     const email = `${u.email_prefix}@${domain}`
-    // Use UUID from POST response if available; Klaar identifies by email when id is omitted
-    const uuid = emailToId[email.toLowerCase()]?.uuid
-
-    // Send value strings, not UUIDs — meta map used only to validate the value exists
-    const buId       = buUuidMap.hasOwnProperty(u.business_unit) ? u.business_unit : null
-    const levelId    = levelUuidMap.hasOwnProperty(u.level)       ? u.level         : null
-    const locationId = locationUuidMap.hasOwnProperty(u.location) ? u.location      : null
-
-    const putPayload = buildEmployeePayload({
-      email,
-      full_name:     u.full_name,
-      org_user_id:   uuid,   // undefined when encrypted API can't give us the ID
-      status:        'active',
-      department:    u.department,
-      business_unit: buId,
-      title:         u.title,
-      manager_email: u.manager_prefix ? `${u.manager_prefix}@${domain}` : null,
-      roles:         [],
-    }, {
-      mobile_number:        u.phone,
-      gender:               u.gender,
-      date_of_joining:      u.date_of_joining,
-      location:             locationId,
-      level:                levelId,
-      grade:                levelId,
-      hrbp_email:           u.hrbp_prefix ? `${u.hrbp_prefix}@${domain}` : null,
-      is_admin:             u.is_admin ? 'YES' : 'NO',
-      is_employee:          'YES',
-      is_fulltime_employee: u.employment_type === 'Full Time' ? 'YES' : 'NO',
-    })
-
-    if (i === 0) console.log('[addEmployees] PUT payload sample:', JSON.stringify(putPayload))
-    console.log(`[addEmployees] PUT ${u.full_name} (uuid=${uuid ?? 'none'})…`)
-
-    const rPut = await api('/um/accounts/employee/', {
-      method: 'PUT',
-      body: JSON.stringify(putPayload),
-    })
-
-    if (rPut.ok) {
-      updated.push(u.full_name)
-    } else {
-      console.warn(`[addEmployees] PUT failed for ${u.full_name}:`, rPut.status, errorBodyText(rPut).slice(0, 500))
-      updateFailed.push(`${u.full_name} (PUT ${rPut.status})`)
-    }
-    await new Promise(res => setTimeout(res, 200))
-  }
-
-  state.dummyUsers = DUMMY_USERS.map(u => ({ email: `${u.email_prefix}@${domain}`, full_name: u.full_name }))
+    const uuid  = emailToId[email.toLowerCase()]?.uuid || managerUuidByEmail[email.toLowerCase()]
+    return { email, full_name: u.full_name, uuid }
+  })
   saveState()
 
   const allFailed = [...postFailed, ...updateFailed]
-  if (allFailed.length) return { ok: false, message: `Created ${postCreated.length} employees, updated ${updated.length}/10 profiles. Failed: ${allFailed.join(', ')}` }
-  return { ok: true, message: `Created ${postCreated.length} employees + updated all ${updated.length} user profiles with full data on ${domain}` }
+  if (allFailed.length) return { ok: false, message: `Created ${postCreated.length} employees, updated ${updated.length}/${employees.length} profiles. Failed: ${allFailed.join(', ')}` }
+  return { ok: true, message: `Created ${postCreated.length} employees + updated all ${updated.length} employee profiles with full data on ${domain}` }
 }
 
 const BULK_GROUP_NAMES = [
-  'Enterprise Strategy & Corporate Steering',
-  'Platform Architecture & Infrastructure Systems',
-  'Commercial Execution & Revenue Acceleration',
-  'User Experience & Interface Design Lab',
-  'Global Talent Acquisition & People Insights',
-  'Corporate Treasury & Capital Management',
-  'Customer Value Operations & Strategic Accounts',
-  'Brand Growth & Digital Marketing Operations',
-  'Regulatory Affairs & Ethics Governance',
-  'Strategic Alliances & Ecosystem Partnerships',
-  'Cybersecurity Defense & Threat Operations',
-  'Advanced Data Science & Machine Learning',
-  'Global Procurement & Logistics Management',
-  'Facilities Management & Workplace Operations',
-  'Site Reliability & Operations Engineering',
-  'Software Quality Engineering & Test Performance',
-  'Process Excellence & Agile Practice',
-  'Inclusion, Diversity & Community Impact',
-  'Internal Governance & Enterprise Risk Audit',
-  'Investor Relations & Market Communications',
-  'ESG Governance & Sustainability Leadership',
-  'Emerging Technologies & Applied Innovation',
-  'Partner Channel & Global Expansion',
-  'Organizational Learning & Executive Development',
-  'Business Continuity & Crisis Resilience Office',
+  'Quantum Cryptography & Post-Quantum Security',
+  'Cognitive Automation & Decision Intelligence',
+  'Multimodal Perception & Computer Vision Labs',
+  'Strategic Sourcing & Category Management',
+  'Workplace Experience & Global Real Estate',
+  'Structured Finance & Balance Sheet Strategy',
+  'Threat Intelligence & Active Cyber Defense',
+  'Targeted Therapeutics & Molecular Informatics',
+  'Fault-Tolerant Architecture & Core Platform SRE',
+  'Direct-to-Consumer Growth & Retention Strategy',
+  'Enterprise Data Fabric & Semantic Governance',
+  'Talent Acquisition & Executive Search Operations',
+  'Business Continuity & Operational Resiliency',
+  'Conversational Intelligence & Agentic AI Research',
+  'Corporate Development & Joint Venture Strategy',
+  'Developer Experience & Tooling Modernization',
+  'Grid Modernization & Energy Storage Systems',
+  'Clearing, Custody & Digital Asset Settlement',
+  'Strategic Portfolio Governance & Delivery Assurance',
+  'Semiconductor Design & ASIC Packaging Labs',
+  'Compensation Strategy & Executive Total Rewards',
+  'Corporate Narrative & Strategic Communications',
+  'Anti-Financial Crime & Trade Sanctions Compliance',
+  'Hybrid Mesh Networking & Software-Defined WAN',
+  'Predictive Logistics & Last-Mile Orchestration',
 ];
 
-// Step 4: Bulk Upload Group — creates 25 CUSTOM groups via CSV, members from bulkUploadUser()
-export async function bulkUploadGroup() {
-  const adminEmail = getEmailFromJwt() || state.adminEmail
-  if (!adminEmail) return { ok: false, message: 'Could not read admin email from session.' }
+// Create a CUSTOM group. Tries the CSV-upload endpoint first — that's what's proven to work
+// on India/US prod (app.klaarhq.com / us.klaarhq.com). If that fails (e.g. dev-api rejects it —
+// see project_group_creation_endpoint_fix memory), falls back to the plain JSON endpoint, which
+// a manual test against Klaar's own UI confirmed works there. This keeps prod's already-working
+// path completely unchanged while fixing dev.
+async function createGroup(name, members, adminEmail, adminOrgUserId) {
+  const memberEmails = members.map(m => m.email).filter(Boolean)
 
-  if (!state.bulkUsers?.length) {
-    return { ok: false, message: 'Run "Bulk Upload User" first so groups have members to assign.' }
+  if (memberEmails.length && adminEmail) {
+    const csvLines = ['members,admins']
+    for (let k = 0; k < memberEmails.length; k++) {
+      csvLines.push(`${memberEmails[k]},${k === 0 ? adminEmail : ''}`)
+    }
+    const formData = new FormData()
+    formData.append('file', new Blob([csvLines.join('\n')], { type: 'text/csv' }), 'members.csv')
+
+    const res = await fetch(
+      API_BASE + `/groupsj/api/v1/groups/csv?name=${encodeURIComponent(name)}`,
+      { method: 'POST', headers: buildHeaders(), body: formData }
+    )
+    if (res.ok) return { ok: true }
+    const txt = (await res.text()).toLowerCase()
+    if (res.status === 400 && txt.includes('exist')) return { ok: true, existing: true }
+    console.warn(`[createGroup] CSV upload failed for "${name}" (${res.status}) — falling back to JSON endpoint`)
   }
 
-  const emails = state.bulkUsers.map(u => u.email).filter(Boolean)
-  if (emails.length === 0) {
-    return { ok: false, message: 'No emails found in bulk users. Run "Bulk Upload User" again.' }
+  const memberIds = members.map(m => m.uuid).filter(Boolean)
+  if (!memberIds.length || !adminOrgUserId) return { ok: false, status: 400 }
+
+  const r = await api('/groupsj/api/v1/groups/', {
+    method: 'POST',
+    body: JSON.stringify({ name, description: '', adminIds: [adminOrgUserId], memberIds }),
+  })
+  if (r.ok) return { ok: true }
+  const body = errorBodyText(r)
+  if (r.status === 400 && body.includes('exist')) return { ok: true, existing: true }
+  return { ok: false, status: r.status }
+}
+
+// Step 4: Bulk Upload Group — creates 25 CUSTOM groups, using whatever users already exist in the workspace
+export async function bulkUploadGroup() {
+  const adminEmail     = getEmailFromJwt() || state.adminEmail
+  const adminOrgUserId = getOrgUserIdFromJwt()
+  if (!adminEmail && !adminOrgUserId) return { ok: false, message: 'Could not read admin identity from session.' }
+
+  // Prefer members already known locally (fast, no API call); otherwise fetch real workspace employees
+  let members = (state.bulkUsers || []).map(u => ({ email: u.email, uuid: u.uuid })).filter(m => m.email || m.uuid)
+  if (!members.length) {
+    const r = await api('/um/accounts/employee/?page=1&page_size=100')
+    const results = r.ok ? searchResults(r) : []
+    members = results
+      .map(e => ({
+        email: e.email || e.company_email || e.user?.email || e.work_email,
+        uuid:  e.org_user?.id || e.id || e.user?.id,
+      }))
+      .filter(m => m.email || m.uuid)
+  }
+
+  if (!members.length) {
+    return { ok: false, message: 'No users found in this workspace. Run "Add User" first so groups have members to assign.' }
   }
 
   const created = []
@@ -818,36 +864,18 @@ export async function bulkUploadGroup() {
   for (let i = 0; i < BULK_GROUP_NAMES.length; i++) {
     const name = BULK_GROUP_NAMES[i]
 
-    // Each group gets 8 members, rotating through all 25 users
-    const groupSize = Math.min(8, emails.length)
-    const groupEmails = []
+    // Each group gets 8 members, rotating through all known users
+    const groupSize = Math.min(8, members.length)
+    const groupMembers = []
     for (let j = 0; j < groupSize; j++) {
-      groupEmails.push(emails[(i + j) % emails.length])
+      groupMembers.push(members[(i + j) % members.length])
     }
 
-    // CSV format — same as addGroup()
-    const csvLines = ['members,admins']
-    for (let k = 0; k < groupEmails.length; k++) {
-      csvLines.push(`${groupEmails[k]},${k === 0 ? adminEmail : ''}`)
-    }
-
-    const formData = new FormData()
-    formData.append('file', new Blob([csvLines.join('\n')], { type: 'text/csv' }), 'members.csv')
-
-    const res = await fetch(
-      API_BASE + `/groupsj/api/v1/groups/csv?name=${encodeURIComponent(name)}&description=`,
-      { method: 'POST', headers: buildHeaders(), body: formData }
-    )
-
-    if (res.ok) {
-      created.push({ name })
+    const result = await createGroup(name, groupMembers, adminEmail, adminOrgUserId)
+    if (result.ok) {
+      created.push({ name, existing: result.existing })
     } else {
-      const txt = await res.text()
-      if (res.status === 400 && txt.toLowerCase().includes('exist')) {
-        created.push({ name, existing: true })
-      } else {
-        failed.push(`${name} (${res.status})`)
-      }
+      failed.push(`${name} (${result.status})`)
     }
   }
 
@@ -864,28 +892,24 @@ export async function bulkUploadGroup() {
 }
 
 const GROUP_NAMES = [
-  'Developer Relations & API Ecosystem Governance',
-  'FinOps, Infrastructure Cost & Cloud Economics',
-  'Crisis Management, Security Ops & Resiliency',
-  'Talent Mobility, Upskilling & Workforce Planning',
-  'Commercial Deal Desk & Revenue Operations',
-  'Strategic ESG, Circularity & Decarbonization',
-  'Customer Success Engineering & Solutions Architecture',
+  'Hyperscale Observability, Telemetry & Distributed Tracing',
+  'Neuromorphic Hardware, Silicon Engineering & Edge Accelerators',
+  'Predictive Maintenance, Digital Twins & Industrial Robotics',
+  'Synthetic Media Forensics, Deepfake Defense & Content Provenance',
+  'RegTech Compliance, AML Automation & Transaction Surveillance',
+  'Smart Grid Telematics, Microgrid Storage & Clean Energy Dispatch',
+  'Cold Chain Telemetry, Global Bio-Logistics & Pharma Distribution',
 ];
-// Step 5: Add Group — creates 7 CUSTOM groups via CSV upload (accepts emails, no IDs needed)
+// Step 5: Add Group — creates 7 CUSTOM groups from the users created by Add Manager/Add Employees
 export async function addGroup() {
-  // Get admin email for the admins column in CSV
-  const adminEmail = getEmailFromJwt() || state.adminEmail
-  if (!adminEmail) return { ok: false, message: 'Could not read admin email from session.' }
+  const adminEmail     = getEmailFromJwt() || state.adminEmail
+  const adminOrgUserId = getOrgUserIdFromJwt()
+  if (!adminEmail && !adminOrgUserId) return { ok: false, message: 'Could not read admin identity from session.' }
 
-  // Need emails saved by addUser()
-  if (!state.dummyUsers?.length) {
+  // Need emails/UUIDs saved by addManagers()/addEmployees()
+  const members = (state.dummyUsers || []).filter(u => u.email || u.uuid)
+  if (!members.length) {
     return { ok: false, message: 'Run "Add User" first so groups have members to assign.' }
-  }
-
-  const emails = state.dummyUsers.map(u => u.email).filter(Boolean)
-  if (emails.length === 0) {
-    return { ok: false, message: 'No emails found in saved dummy users. Run "Add User" again.' }
   }
 
   const created = []
@@ -894,44 +918,18 @@ export async function addGroup() {
   for (let i = 0; i < GROUP_NAMES.length; i++) {
     const name = GROUP_NAMES[i]
 
-    // Rotate: group i gets 4 emails starting at index i (wraps around)
-    const groupSize = Math.min(4, emails.length)
-    const groupEmails = []
+    // Rotate: group i gets 4 members starting at index i (wraps around)
+    const groupSize = Math.min(4, members.length)
+    const groupMembers = []
     for (let j = 0; j < groupSize; j++) {
-      groupEmails.push(emails[(i + j) % emails.length])
+      groupMembers.push(members[(i + j) % members.length])
     }
 
-    // Build CSV: members column + admins column (admin email on first row only)
-    // This creates a CUSTOM group — Klaar resolves emails to users on the server
-    const csvLines = ['members,admins']
-    for (let k = 0; k < groupEmails.length; k++) {
-      csvLines.push(`${groupEmails[k]},${k === 0 ? adminEmail : ''}`)
-    }
-    const csvContent = csvLines.join('\n')
-
-    const formData = new FormData()
-    formData.append('file', new Blob([csvContent], { type: 'text/csv' }), 'members.csv')
-
-    const encodedName = encodeURIComponent(name)
-    const res = await fetch(
-      API_BASE + `/groupsj/api/v1/groups/csv?name=${encodedName}&description=`,
-      {
-        method:  'POST',
-        headers: buildHeaders(),   // no Content-Type — browser sets multipart boundary automatically
-        body:    formData,
-      }
-    )
-
-    if (res.ok) {
-      created.push({ name })
+    const result = await createGroup(name, groupMembers, adminEmail, adminOrgUserId)
+    if (result.ok) {
+      created.push({ name, existing: result.existing })
     } else {
-      const txt = await res.text()
-      const body = txt.toLowerCase()
-      if (res.status === 400 && body.includes('exist')) {
-        created.push({ name, existing: true })
-      } else {
-        failed.push(`${name} (${res.status})`)
-      }
+      failed.push(`${name} (${result.status})`)
     }
   }
 

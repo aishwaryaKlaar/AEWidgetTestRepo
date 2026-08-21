@@ -1,6 +1,6 @@
 import { api, getAdminUserIdFromJwt, getOrgUserIdFromJwt } from '../../core/api.js'
 import { state, saveState } from '../../core/state.js'
-import { notImplemented } from '../../core/helpers.js'
+import { notImplemented, unwrapPayload } from '../../core/helpers.js'
 import { fetchGroups } from '../../utils/fetchGroups.js'
 
 // Step 1: Create Time Period — creates 7 cycles for current year
@@ -17,14 +17,14 @@ export async function createTimePeriod() {
   }
 
   const year = new Date().getFullYear()
-  const periods = [
-  { name: `Strategic Focus ${year}`, start_at: `${year}-01-01`, end_at: `${year}-02-28` },
-  { name: `Operational Alignment ${year}`, start_at: `${year}-03-01`, end_at: `${year}-04-30` },
-  { name: `Value Creation ${year}`, start_at: `${year}-05-01`, end_at: `${year}-06-30` },
-  { name: `Execution Momentum ${year}`, start_at: `${year}-07-01`, end_at: `${year}-08-31` },
-  { name: `Impact Delivery ${year}`, start_at: `${year}-09-01`, end_at: `${year}-10-31` },
-  { name: `Target Consolidation ${year}`, start_at: `${year}-11-01`, end_at: `${year}-11-30` },
-  { name: `Annual Alignment ${year}`, start_at: `${year}-12-01`, end_at: `${year}-12-31` },
+const periods = [
+  { name: `Organizational Inception & Roadmap Alignment ${year}`, start_at: `${year}-01-01`, end_at: `${year}-02-28` },
+  { name: `Capability Mobilization & Platform Hardening ${year}`,   start_at: `${year}-03-01`, end_at: `${year}-04-30` },
+  { name: `Core Velocity & Initiative Delivery ${year}`,          start_at: `${year}-05-01`, end_at: `${year}-06-30` },
+  { name: `System Resilience & Ecosystem Expansion ${year}`,      start_at: `${year}-07-01`, end_at: `${year}-08-31` },
+  { name: `Strategic Monetization & Customer Adoption ${year}`,   start_at: `${year}-09-01`, end_at: `${year}-10-31` },
+  { name: `Risk Governance & Compliance Certification ${year}`,   start_at: `${year}-11-01`, end_at: `${year}-11-30` },
+  { name: `Annual Impact Synthesis & Horizon Planning ${year}`,   start_at: `${year}-12-01`, end_at: `${year}-12-31` },
 ];
   const created = []
   const allCreated = [] // collect all {id, start_at, end_at} so we can pick the active one
@@ -65,31 +65,31 @@ export async function createTimePeriod() {
 }
 
 const DUMMY_GOALS = [
-  'Optimize Global Supply Chain Resilience',
-  'Accelerate Cloud Transformation and Migration',
-  'Elevate Customer Lifetime Value and Retention',
-  'Modernize Enterprise Data Infrastructure',
-  'Drive Sustainable Product Innovation',
-  'Maximize Capital Efficiency and Cost Structure',
-  'Strengthen Cybersecurity and Threat Mitigation',
-  'Expand Regional Market Penetration',
-  'Scale Automated Workflow Solutions',
-  'Foster High-Performance Organizational Culture',
-  'Optimize Cross-Channel Revenue Generation',
-  'Enhance Brand Equity and Market Position',
-  'Streamline Strategic Procurement Processes',
-  'Improve Talent Retention and Mobility',
-  'Implement AI-Driven Operational Analytics',
-  'Unify Customer Service Operations',
-  'Establish Enterprise Risk Governance Standards',
-  'Standardize Cross-Functional Key Performance Indicators',
-  'Enhance Regulatory and Environmental Compliance',
-  'Strengthen Partner Ecosystem Integration',
-  'Accelerate Time-to-Market for New Offerings',
-  'Improve Field Force Productivity and Enablement',
-  'Implement Zero-Trust Security Protocols',
-  'Optimize Resource Utilization Across Projects',
-  'Drive Strategic Digital Product Adoption'
+  'Deploy Multi-Region Active-Active Database Topologies',
+  'Enforce Dynamic Role-Based Access Across Vector Storage',
+  'Pioneer Strategic Joint Ventures in Emerging Markets',
+  'Automate Contract Lifecycle Auditing and Tier-1 Vendor SLAs',
+  'Institutionalize Cross-Domain Pair Programming and Tech Talks',
+  'Decarbonize Compute Workloads via Green Region Scheduling',
+  'Embed Behavioral Anomaly Scoring into Checkout Gateways',
+  'Modernize Core Ledger Services Using Event Sourcing Patterns',
+  'Compress End-to-End Build and Deployment Pipeline Latency',
+  'Formulate Enterprise AI Governance and Provenance Standards',
+  'Automate Policy-as-Code Audits for Sovereign Cloud Mandates',
+  'Implement Automated Traffic Shedding and Circuit Breakers',
+  'Orchestrate Continuous Static and Dynamic Software Bill Audits',
+  'Model Unit Economics and Consumption-Based Monetization Tiers',
+  'Instrument Real-Time Behavioral Telemetry for Core Funnels',
+  'Eliminate Redundant SaaS Allocations and Inefficient Licenses',
+  'Automate Triage and Tier-3 Escalation via Runbook Diagnostics',
+  'Align Cloud Infrastructure Spend Directly with P&L Targets',
+  'Publish Ephemeral Sandbox Environments for Third-Party APIs',
+  'Standardize Micro-Frontend Design Tokens and Design Systems',
+  'Harmonize Identity Provider Schemas Following Corporate M&A',
+  'Simulate Cascading Network Partitions via Chaos Injection',
+  'Streamline Technical Onboarding with Interactive Sandboxes',
+  'Build Graph-Powered Knowledge Retrieval for Field Engineers',
+  'Process Sensor Telemetry via Ultra-Lightweight Edge Runtimes'
 ];
 
 // Step 2: Create Goals — creates 25 individual goals under an active time period
@@ -161,16 +161,16 @@ export async function createGoals() {
 }
 
 const LIBRARY_GOALS = [
-  'Drive Enterprise Digital Transformation and Modernization',
-  'Scale High-Yield Revenue Streams and Market Share',
-  'Optimize Capital Allocation and Financial Discipline',
-  'Elevate Customer Experience and Long-Term Retention',
-  'Strengthen Operational Governance and Risk Mitigation',
-  'Foster High-Performance Culture and Talent Retention',
-  'Accelerate Product Time-to-Market and Continuous Innovation',
-  'Expand Strategic Alliance Ecosystem and Partnership Synergy',
-  'Maximize Cloud Infrastructure Utilization and System Reliability',
-  'Advance Environmental, Social, and Governance (ESG) Sustainability'
+  'Operationalize Zero-Trust Microsegmentation Across Multi-Cloud Estates',
+  'Accelerate Retrieval-Augmented Generation & Enterprise Vector Search',
+  'Optimize Multi-Cloud Unit Economics & Programmatic FinOps Guardrails',
+  'Institutionalize Blameless Root-Cause Auditing & Resilience Drills',
+  'Harden Software Supply Chains via Continuous Cryptographic SBOM Verification',
+  'Harmonize Cross-Functional Discovery & Continuous Product Experimentation',
+  'Modernize Event-Driven Streaming Fabrics & Asynchronous Integration Mesh',
+  'Pioneer Decentralized Identity Standards & Privacy-Preserving Cryptography',
+  'Establish Dynamic SLA/SLO Telemetry & Proactive Outage Prevention Protocols',
+  'Cultivate Cross-Domain Succession Pathways & High-Agency Leadership'
 ];
 
 // Step 3: Add Goals in Goal Library — posts 10 template goals to the workspace library
@@ -211,69 +211,69 @@ export async function addGoalsAILibrary() {
 // Step 4: Default Goals — creates a test goal cycle (smoke test)
 const DEFAULT_ASSIGNMENTS = [
   {
-    name: 'Cross-Functional Integration Program',
+    name: 'Cognitive Systems & Autonomous Agent Orchestration',
     goals: [
-      'Streamline handoffs between departments using standardized communication frameworks',
-      'Establish cross-departmental working groups to resolve operational friction points',
-      'Track joint project deliverables through unified progress dashboards',
-      'Facilitate monthly strategic alignment sessions across key business units',
+      'Architect event-driven agentic loops with multi-step deterministic safety checks',
+      'Deploy localized inference nodes to minimize round-trip latency for real-time edge processing',
+      'Implement multi-agent consensus protocols to arbitrate complex decision workflows',
+      'Establish continuous regression suites for automated prompt and context drift detection',
     ],
   },
   {
-    name: 'Commercial Expansion & Market Penetration',
+    name: 'Decentralized Identity & Zero-Knowledge Verification',
     goals: [
-      'Identify high-margin target segments using predictive account-based analytics',
-      'Optimize sales pipeline velocity through structured deal stage reviews',
-      'Implement structured account expansion plans for enterprise clients',
-      'Refine revenue modeling accuracy using real-time CRM performance indicators',
-      'Expand strategic channel partnerships to accelerate deal sourcing',
+      'Integrate verifiable credential issuance protocols across employee and vendor portals',
+      'Deploy zero-knowledge proof verification circuits to eliminate raw PII transmission',
+      'Standardize DID (Decentralized Identifier) resolvers across federated IAM architectures',
+      'Automate cryptographic revocation registry updates across distributed identity brokers',
+      'Enforce tamper-evident audit logging for high-assurance credential handshakes',
     ],
   },
   {
-    name: 'Next-Gen Product Quality & Adoption',
+    name: 'Distributed Core Ledger & Transaction Resiliency',
     goals: [
-      'Accelerate feature release cadence while maintaining zero high-severity bugs',
-      'Incorporate structured user feedback loops into sprint planning cycles',
-      'Decrease user time-to-value through automated onboarding workflows',
-      'Standardize release engineering practices across modern cloud environments',
+      'Migrate relational financial ledgers to an immutable event-sourced log architecture',
+      'Implement two-phase commit consensus optimizations across globally partitioned shards',
+      'Deploy automated double-entry verification workers to detect balance mismatches in real time',
+      'Establish sub-second multi-region disaster recovery replication with zero data loss',
     ],
   },
   {
-    name: 'Enterprise Client Success & Retention',
+    name: 'Hardware Acceleration & Low-Latency Systems Tuning',
     goals: [
-      'Reduce client churn rate by deploying proactive health score monitoring',
-      'Conduct quarterly executive business reviews for top-tier key accounts',
-      'Build comprehensive user enablement hubs to drive feature utilization',
-      'Form client advisory boards to co-design key product roadmap initiatives',
+      'Profile kernel-level network packet processing to bypass user-space context switches',
+      'Optimize GPU cluster allocation workloads to maximize tensor core utilization efficiency',
+      'Implement zero-copy memory buffers across inter-process communication layers',
+      'Conduct hardware-level cache line contention audits for high-frequency processing engines',
     ],
   },
   {
-    name: 'Operational Rigor & Automation Engine',
+    name: 'Autonomous Governance & Continuous Audit Automation',
     goals: [
-      'Automate repetitive manual workflows to reduce cycle time across core functions',
-      'Standardize operating procedures to lower systemic error rates',
-      'Implement real-time operational metrics dashboards for business unit leaders',
-      'Migrate legacy manual reporting processes to centralized self-service BI tools',
-      'Conduct bi-annual process audits to identify and eliminate operational bottlenecks',
+      'Codify cloud infrastructure security benchmarks using declarative policy engines',
+      'Automate real-time reconciliation of sovereign data storage boundaries across regions',
+      'Generate auditor-certified compliance snapshots continuously via CI/CD triggers',
+      'Deploy automated toxic combination detection for IAM privilege escalation paths',
+      'Implement continuous cryptographic attestation for all running container images',
     ],
   },
   {
-    name: 'Executive Coaching & Management Excellence',
+    name: 'Engineering Ecosystem Health & Asynchronous Culture',
     goals: [
-      'Establish structured 360-degree feedback channels for mid-level managers',
-      'Deploy targeted leadership training programs focused on strategic decision-making',
-      'Create transparent career progression matrices across every department',
-      'Implement succession planning pipelines for high-criticality enterprise roles',
+      'Transition architectural decision-making to structured, asynchronous RFC workflows',
+      'Instrument continuous code review latency tracking to prevent PR stagnation',
+      'Establish blameless incident retrospective playbooks with traceable remediation tasks',
+      'Deploy centralized schema registries to eliminate cross-team synchronous blockers',
     ],
   },
   {
-    name: 'Cloud Infrastructure & Security Modernization',
+    name: 'Predictive Infrastructure Scaling & Cost Intelligence',
     goals: [
-      'Migrate legacy on-premise components to high-availability cloud infrastructure',
-      'Implement Zero-Trust access policies across all enterprise endpoints',
-      'Enhance enterprise data governance using automated compliance controls',
-      'Upskill technical staff on modern cloud-native deployment patterns',
-      'Evaluate emerging AI-driven tools to enhance internal developer productivity',
+      'Train time-series forecasting models to pre-provision compute capacity ahead of surges',
+      'Implement automated ephemeral namespace termination policies for staging environments',
+      'Embed real-time cost-per-query visibility directly into internal developer dashboards',
+      'Automate multi-cloud spot instance failover orchestrations for batch workloads',
+      'Audit unused storage block volumes and cold assets for automated lifecycle tiering',
     ],
   },
 ];
@@ -364,16 +364,16 @@ export async function defaultGoals() {
 }
 
 const GROUP_OKR_GOALS = [
-  'Drive Enterprise Synergy Through Unified Performance Metrics',
-  'Accelerate Cross-Departmental Initiative Delivery Speed',
-  'Establish Transparent Milestone Tracking for Joint Projects',
-  'Optimize Shared Resource Utilization and Capacity Planning',
-  'Instill Shared Accountability for Multi-Team Strategic Outcomes',
-  'Harmonize Inter-Departmental Workflows and Communication Protocols',
-  'Foster Cross-Functional Experimentation and Rapid Prototyping',
-  'Streamline Strategic Decision-Making Across Leadership Teams',
-  'Institutionalize Knowledge-Sharing and Domain Expertise Scaling',
-  'Maximize Execution Consistency Against High-Impact OKRs'
+  'Operationalize Multi-Domain Data Mesh Contracts Across Squad Boundaries',
+  'Accelerate Shared Infrastructure Decoupling and Automated Self-Service Tooling',
+  'Standardize Cross-Ecosystem Telemetry and Unified Observability Dashboards',
+  'Establish Federated Security Risk Acceptance Criteria and Rapid Triage Protocols',
+  'Align Cross-Functional Release Cadences to Reduce Inter-Service Deployment Drag',
+  'Co-Develop Scalable Machine Learning Pipelines for Joint Predictive Initiatives',
+  'Consolidate Enterprise API Gateways and Unified Ingress Rate-Limiting Models',
+  'Institutionalize Blameless Cross-Departmental Architecture Review Boards',
+  'Streamline Vendor Procurement Evaluations Across Collaborative Business Units',
+  'Quantify Holistic Business Value Realization via Shared KPI Scorecards'
 ];
 
 // Step 5: Group OKR — creates 10 group-level objectives tied to the workspace group
@@ -428,7 +428,8 @@ export async function groupOKR() {
     })
     if (!r.ok) return { ok: false, message: `Created ${created.length}/${GROUP_OKR_GOALS.length}; failed "${name}" (${r.status})` }
     created.push(name)
-    const objId = r.data?.data?.id || r.data?.id || (Array.isArray(r.data.data) ? r.data.data[0] : null) || null
+    const payload = unwrapPayload(r)
+    const objId = Array.isArray(payload) ? payload[0] : (payload?.id || null)
     if (objId) createdIds.push(objId)
     await new Promise(res => setTimeout(res, 200))
   }
@@ -439,26 +440,26 @@ export async function groupOKR() {
 }
 
 const INDIVIDUAL_OKR_GOALS = [
-  'Master Core Technical Competencies and Operational Best Practices',
-  'Autonomously Resolve Complex Workflows and Technical Edge Cases',
-  'Consistently Outperform SLA Expectations on Critical Deliverables',
-  'Forge Impactful Cross-Functional Partnerships Across Teams',
-  'Maintain Rigorous Execution Standards and Craftsmanship',
-  'Drive Individual Deliverables from Conception to Completion',
-  'Maintain High Operational Throughput During Shifting Priorities',
-  'Proactively Spot Edge Cases and Mitigate Potential Bottlenecks',
-  'Rapidly Upskill and Apply New Methodologies to Current Work',
-  'Ensure Dependable Execution and Timely Project Delivery',
-  'Align Daily Tasks with Broader High-Level Business Metrics',
-  'Optimize Personal Time Allocation and Task Prioritization',
-  'Assume Full Ownership of High-Stakes Project Components',
-  'Directly Elevate Team Deliverables Through High-Impact Contribution',
-  'Apply Structured Problem-Solving Frameworks to Complex Scenarios',
-  'Eliminate Personal Workflow Friction to Boost Output Efficiency',
-  'Structure and Present Analytical Findings Clearly to Stakeholders',
-  'Identify Inefficiencies and Propose Scalable Process Enhancements',
-  'Leverage Metrics and Quantitative Data to Validate Decisions',
-  'Maintain Strict Personal Ownership and Accountability for Success'
+  'Eliminate High-Frequency Toil Through Automated Diagnostic Runbooks',
+  'Champion Rigorous Type Safety and Zero-Warning Linter Standards',
+  'Design Decoupled Service Contracts to Prevent Downstream Breaking Changes',
+  'Accelerate Pull Request Review Latency to Unblock Peer Velocity',
+  'Profile Hot Code Paths to Cut P99 Query and Response Latencies',
+  'Author Comprehensive Technical RFCs for Ambiguous Architectural Problems',
+  'Harden Microservice Fault Tolerance via Chaos Injection and Resilience Probes',
+  'Integrate Granular Telemetry Spans Across Newly Authored Core Endpoints',
+  'Standardize Ephemeral Development Sandboxes to Shorten Feature Onboarding',
+  'Proactively Remediate High-Severity Vulnerabilities in Transitive Dependencies',
+  'Conduct Impactful Knowledge Transfer Sessions on Emerging Toolchains',
+  'Deconstruct Monolithic Modules into Discrete Event-Driven Micro-Packages',
+  'Optimize Memory Allocation Profiles to Reduce Cloud Worker Footprint',
+  'Formulate Clear Acceptance Criteria and Contract Tests with Product Counterparts',
+  'Establish Automated Health Check Probes to Expedite Zero-Downtime Rollouts',
+  'Audit Database Index Coverage to Eliminate Inefficient Table Scans',
+  'Instrument Client-Side Interaction Metrics to Validate User Journey Health',
+  'Uphold Uncompromising Branch Test Coverage for All Critical Path Business Logic',
+  'Synthesize Complex Incident Logs into Actionable Architectural Safeguards',
+  'Drive Seamless Deprecation Pathways for Sunsetting Legacy API Endpoints'
 ];
 
 // Step 6: Individual OKR — creates 10 individual-level objectives
@@ -509,8 +510,8 @@ export async function individualOKR() {
     })
     if (!r.ok) return { ok: false, message: `Created ${created.length}/${INDIVIDUAL_OKR_GOALS.length}; failed "${name}" (${r.status})` }
     created.push(name)
-    const objId = r.data?.data?.id || r.data?.id || (Array.isArray(r.data?.data) ? r.data.data[0] : null) || null
-    console.log('[individualOKR] id:', objId, '| raw:', JSON.stringify(r.data).slice(0, 150))
+    const payload = unwrapPayload(r)
+    const objId = Array.isArray(payload) ? payload[0] : (payload?.id || null)
     if (objId) createdIds.push(objId)
     await new Promise(res => setTimeout(res, 200))
   }
@@ -596,7 +597,8 @@ export async function keyResult() {
     })
     if (!r.ok) return { ok: false, message: `Created ${created.length}/${parentIds.length}; failed KR ${i + 1} (${r.status})` }
     created.push(name)
-    const krId = r.data?.data?.id || r.data?.id || null
+    const payload = unwrapPayload(r)
+    const krId = Array.isArray(payload) ? payload[0] : (payload?.id || null)
     if (krId) createdIds.push(krId)
     await new Promise(res => setTimeout(res, 200))
   }

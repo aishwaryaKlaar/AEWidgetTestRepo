@@ -86,16 +86,16 @@ async function _setupPlans() {
 }
 
 const IDP_NAMES = [
-  'Enterprise Leadership Readiness Track',
-  'Strategic Competency Elevation Roadmap',
-  'Professional Excellence & Mastery Blueprint',
-  'Executive Talent Mobility Pipeline',
-  'Next-Gen Capability Building Program',
-  'Individual Growth & Achievement Charter',
-  'Core Skills & Impact Accelerator',
-  'Organizational Success & Career Continuum',
-  'High-Potential Talent Velocity Plan',
-  'Future-Ready Skill Transformation Matrix',
+  'Principal Engineering & Systems Mastery Blueprint',
+  'Strategic General Management & P&L Readiness Track',
+  'Autonomous Craftsmanship & High-Agency Growth Plan',
+  'Cross-Functional Influence & Ecosystem Leadership Journey',
+  'Frontier Technology & Applied Innovation Fellowship',
+  'Individual Contributor to Organizational Multiplier Path',
+  'Domain Depth & Multi-Disciplinary Mobility Continuum',
+  'Emerging Executive & Enterprise Stewardship Accelerator',
+  'Technical Architecture & Resilience Leadership Circuit',
+  'Continuous Discovery & Product Craft Elevation Framework',
 ];
 async function _createIDPPlan({ name, groupId }) {
   const r1 = await api('/idp/idp/development_plan/', {
@@ -135,43 +135,34 @@ async function _createIDPPlan({ name, groupId }) {
 }
 
 const COMPETENCY_LIST = [
-  { name: 'VisionaryLeadership', description: 'Translates high-level corporate strategies into actionable, inspiring team priorities.' },
-  { name: 'OperationalPrecision', description: 'Maintains meticulous attention to detail and high standards across core workflows.' },
-  { name: 'AdaptiveResilience', description: 'Navigates ambiguity and complex setbacks with composure, agility, and steady focus.' },
-  { name: 'DataDrivenInsight', description: 'Synthesizes quantitative metrics and evidence to validate strategic and tactical decisions.' },
-  { name: 'CrossFunctionalSynergy', description: 'Breaks down departmental silos to drive seamless, end-to-end organizational alignment.' },
-  { name: 'ContinuousInnovation', description: 'Identifies process inefficiencies and proactively introduces modern, scalable solutions.' },
-  { name: 'PersuasiveAdvocacy', description: 'Articulates complex ideas convincingly to gain buy-in across diverse stakeholder groups.' },
-  { name: 'StrategicRiskManagement', description: 'Identifies potential operational vulnerabilities early and implements proactive mitigation plans.' },
-  { name: 'ResourceOptimization', description: 'Allocates capital, time, and headcount efficiently to maximize business return.' },
-  { name: 'TalentMentorship', description: 'Actively coaches, empowers, and elevates the capabilities of colleagues and direct reports.' },
-  { name: 'ClientEmpathy', description: 'Deeply understands customer pain points to engineer meaningful, value-driven solutions.' },
-  { name: 'QualityCraftsmanship', description: 'Consistently delivers polished, reliable, and high-caliber work products.' },
-  { name: 'CorporateGovernance', description: 'Upholds strict regulatory, compliance, and ethical standards across all business functions.' },
-  { name: 'AgilePrioritization', description: 'Dynamically shifts focus toward high-leverage initiatives as organizational demands evolve.' },
-  { name: 'ValueCreation', description: 'Focuses energy and effort on initiatives that generate tangible, sustainable business impact.' },
+  { name: 'AlgorithmicPrecision', description: 'Deconstructs complex edge cases to deliver robust, high-performance logic with minimal computational overhead.' },
+  { name: 'TelemetryObsession', description: 'Instruments deep observability and real-time monitoring across platforms to detect bottlenecks before users do.' },
+  { name: 'AutonomousExecution', description: 'Operates with strong individual ownership and high agency to translate ambiguous requirements into shippable value.' },
+  { name: 'CognitiveHumility', description: 'Actively seeks contrarian feedback, acknowledges blind spots, and pivots technical approaches without defensive bias.' },
+  { name: 'SiloDecoupling', description: 'Architects independent interfaces and modular operational contracts to prevent cross-team dependency lock-in.' },
+  { name: 'ResilienceEngineering', description: 'Proactively designs self-healing systems and automated failover topologies that withstand infrastructure faults.' },
+  { name: 'ExecutiveBrevity', description: 'Distills highly complex technical trade-offs into crisp, high-signal briefings tailored for leadership decision-making.' },
+  { name: 'ZeroTrustMindset', description: 'Embeds least-privilege access, immutable audit logging, and cryptographic verification into every layer of the stack.' },
+  { name: 'UnitEconomicsGrip', description: 'Monitors cloud cost drivers and infrastructure utilization to guarantee margins scale sustainably alongside traffic.' },
+  { name: 'HighSignalMentorship', description: 'Accelerates team talent density through regular peer pairing, code reviews, and structured knowledge transfers.' },
+  { name: 'FrictionReduction', description: 'Relentlessly targets and automates repetitive developer toil to maximize focused engineering deep-work time.' },
+  { name: 'ContractReliability', description: 'Designs backward-compatible, stable API boundaries and event schemas that protect upstream and downstream consumers.' },
+  { name: 'PrincipledCandor', description: 'Voices constructive dissent early, raises uncomfortable operational realities transparently, and commits fully once aligned.' },
+  { name: 'ContextualAgility', description: 'Shifts seamlessly between micro-level technical debugging and macro-level business objective calibration.' },
+  { name: 'ProductLedDiscovery', description: 'Validates hypotheses rapidly through low-fidelity prototypes, behavioral metrics, and direct continuous discovery loops.' },
 ];
 
+// Confirmed via a real Klaar UI request: POST with no body, response is
+// {success, message, data: [{id, type_name, ...}, ...]} — picks the first available type.
 async function _resolveCompetencyTypeId() {
   if (state.competencyTypeId) return state.competencyTypeId
 
-  const _extract = (r) => {
-    if (!r.ok) return null
-    const list = r.data?.data || r.data?.results || (Array.isArray(r.data) ? r.data : [])
-    return (list.length ? list[0]?.id || list[0]?.type_id : null) || r.data?.id || r.data?.data?.id || null
-  }
+  const r = await api('/review/get_competency_types', { method: 'POST' })
+  if (!r.ok) return null
 
-  // Skip GET /review/get_competency_type — confirmed 404
-  // Try POST variants that are more likely to work
-  for (const attempt of [
-    () => api('/review/get_competency_types', { method: 'POST', body: JSON.stringify({}) }),
-    () => api('/review/get_competency_type/'),
-    () => api('/review/create_competency_type', { method: 'POST', body: JSON.stringify({ name: 'Core Competencies' }) }),
-  ]) {
-    const id = _extract(await attempt())
-    if (id) { state.competencyTypeId = id; saveState(); return id }
-  }
-  return null
+  const id = r.data?.data?.[0]?.id || null
+  if (id) { state.competencyTypeId = id; saveState() }
+  return id
 }
 
 // Step 1: Competencies — resolves a competency type then creates competencies
@@ -233,16 +224,16 @@ export async function createIDP() {
 }
 
 const PIP_NAMES = [
-  'Performance Elevation and Recovery Plan',
-  'Operational Execution Support Program',
-  'Strategic Professional Growth Framework',
-  'Workplace Capability Realignment Plan',
-  'Results and Effectiveness Acceleration Journey',
-  'Targeted Competency Enhancement Initiative',
-  'Quality and Consistency Improvement Plan',
-  'Business Alignment and Support Framework',
-  'Professional Delivery Development Plan',
-  'Continuous Performance Alignment Journey',
+  'Milestone Realignment & Delivery Roadmap',
+  'Execution Consistency & Focus Blueprint',
+  'Core Impact & Accountabilities Compact',
+  'Professional Competency Restoration Framework',
+  'Strategic Velocity Recovery Initiative',
+  'Targeted Output & Delivery Pathway',
+  'Operational Standards Alignment Plan',
+  'Performance Turnaround & Mentorship Action Plan',
+  'Skill Precision & Execution Enhancement Program',
+  'Foundational Excellence & Growth Protocol',
 ];
 
 async function _createPIPPlan({ name, groupId }) {
